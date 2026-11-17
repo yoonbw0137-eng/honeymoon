@@ -1,0 +1,896 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>병우❤️지은 신혼여행</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF2F5; --surface:#FFFFFF; --surface2:#F5F7FA; --ink:#18212E; --muted:#5B6878; --line:#D8DFE7;
+  --grid:#DFE6ED; --river:#93B9D3; --land:#E4EAF0; --warnbg:#FFF6E0; --warnline:#D9A400; --warnink:#5C4500;
+  --swiss:#C8102E; --prague:#93701E; --budapest:#15766A;
+  --c-sight:#3D63B8; --c-food:#C25B12; --c-cafe:#9A4E8F; --c-night:#3E4A9E; --c-xmas:#1E7A3C;
+  color-scheme:light; box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#10161E; --surface:#18212C; --surface2:#1F2936; --ink:#E6ECF2; --muted:#9AA8B9; --line:#2C3847;
+    --grid:#1F2B39; --river:#3C6987; --land:#1A2430; --warnbg:#2E2610; --warnline:#C99A1E; --warnink:#F1DCA0;
+    --swiss:#F2667A; --prague:#DDB65E; --budapest:#4DB8A6;
+    --c-sight:#86A6EE; --c-food:#F0965A; --c-cafe:#D893CE; --c-night:#A3ADF5; --c-xmas:#6CCB8A;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#10161E; --surface:#18212C; --surface2:#1F2936; --ink:#E6ECF2; --muted:#9AA8B9; --line:#2C3847;
+  --grid:#1F2B39; --river:#3C6987; --land:#1A2430; --warnbg:#2E2610; --warnline:#C99A1E; --warnink:#F1DCA0;
+  --swiss:#F2667A; --prague:#DDB65E; --budapest:#4DB8A6;
+  --c-sight:#86A6EE; --c-food:#F0965A; --c-cafe:#D893CE; --c-night:#A3ADF5; --c-xmas:#6CCB8A;
+  color-scheme:dark;
+}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;font-size:15px;line-height:1.6;--accent:var(--swiss)}
+body[data-city="prague"]{--accent:var(--prague)}
+body[data-city="budapest"]{--accent:var(--budapest)}
+body[data-city="money"],body[data-city="tips"],body[data-city="fav"]{--accent:var(--ink)}
+a{color:inherit} button,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.serif{font-family:"Gowun Batang",serif}
+
+header.hero{padding:40px 0 8px}
+.hero h1{font-family:"Gowun Batang",serif;font-weight:700;font-size:clamp(30px,6vw,52px);line-height:1.15;margin:0}
+.hero p.lede{margin:12px 0 0;color:var(--muted);max-width:62ch}
+.hero .sum{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:16px;font-size:14px}
+.hero .sum b{font-weight:600}
+.hero .sum span{color:var(--muted)}
+.routecard{margin-top:22px;background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.routemap{display:block;width:100%;height:auto}
+.routemap .grat{stroke:var(--grid);stroke-width:1}
+.routemap .country{fill:var(--muted);opacity:.55;font-size:15px;letter-spacing:.2em}
+.routemap .river{fill:none;stroke:var(--river);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.routemap .riverlabel{fill:var(--river);font-size:13px;font-style:italic}
+.routemap .leg{fill:none;stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round}
+.routemap .leg.swiss{stroke:var(--swiss)}
+.routemap .leg.train{stroke:var(--ink)}
+.routemap .leg.flight{stroke:var(--muted);stroke-dasharray:2 9;stroke-width:3}
+.routemap .draw{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.1s ease forwards}
+.routemap .fade{opacity:0;animation:fade .6s ease forwards}
+@keyframes draw{to{stroke-dashoffset:0}} @keyframes fade{to{opacity:1}}
+.routemap .legtag{font-size:13px;fill:var(--muted)}
+.routemap .stop{cursor:pointer}
+.routemap .stop circle{fill:var(--surface);stroke-width:3.5}
+.routemap .stop text{font-size:16px;font-weight:600;fill:var(--ink)}
+.routemap .stop:hover circle{r:10}
+.routemap .stop:focus{outline:none}
+.routemap .stop:focus-visible text{text-decoration:underline}
+.legs{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line)}
+.legs button{all:unset;cursor:pointer;padding:14px 18px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:2px}
+.legs button:last-child{border-right:0}
+.legs button:hover{background:var(--surface2)}
+.legs button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+.legs .d{font-size:13px;color:var(--muted)}
+.legs .n{font-family:"Gowun Batang",serif;font-size:19px;font-weight:700}
+.legs .n i{font-style:normal;font-family:"IBM Plex Sans KR",sans-serif;font-size:13px;font-weight:500;margin-left:6px;padding:1px 8px;border-radius:999px;color:var(--surface)}
+.legs [data-go="swiss"] .n i{background:var(--swiss)}
+.legs [data-go="prague"] .n i{background:var(--prague)}
+.legs [data-go="budapest"] .n i{background:var(--budapest)}
+
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);margin-top:28px;border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+nav.tabs .wrap{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+nav.tabs .wrap::-webkit-scrollbar{display:none}
+.tab{all:unset;cursor:pointer;white-space:nowrap;padding:14px 12px 12px;border-bottom:3px solid transparent;color:var(--muted);font-weight:500}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+.tab:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.tab .cnt{font-size:12px;margin-left:4px;color:var(--muted)}
+
+main{padding:28px 0 64px}
+.cityhead{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 24px;margin-bottom:18px}
+.cityhead h2{font-family:"Gowun Batang",serif;font-size:clamp(26px,4.5vw,38px);margin:0;line-height:1.2}
+.cityhead h2 small{display:block;font-family:"IBM Plex Sans KR",sans-serif;font-size:14px;font-weight:400;color:var(--muted);margin-top:4px}
+.facts{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--muted)}
+.facts b{color:var(--ink);font-weight:600}
+
+.days{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:20px}
+.day{all:unset;cursor:pointer;flex:0 0 auto;padding:10px 16px;border:1px solid var(--line);border-radius:12px;background:var(--surface);min-width:128px}
+.day .dn{font-weight:600;font-size:14px}
+.day .dt{font-size:13px;color:var(--muted)}
+.day .dm{font-size:12px;color:var(--muted);margin-top:2px;font-variant-numeric:tabular-nums}
+.day[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.day[aria-pressed="true"] .dn{color:var(--accent)}
+.day:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:28px;align-items:start}
+.side{position:sticky;top:calc(env(safe-area-inset-top,0px) + 70px);display:flex;flex-direction:column;gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.daymap{display:block;width:100%;height:auto;background:var(--land)}
+.daymap .g{stroke:var(--grid);stroke-width:1}
+.daymap .path{fill:none;stroke:var(--accent);stroke-width:2.5;stroke-dasharray:6 6;opacity:.7}
+.daymap .pin{cursor:pointer}
+.daymap .pin circle{fill:var(--surface);stroke:var(--accent);stroke-width:2.5}
+.daymap .pin text{font-size:12px;font-weight:600;fill:var(--accent);text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.daymap .pin.on circle{fill:var(--accent);r:15}
+.daymap .pin.on text{fill:var(--surface)}
+.daymap .pin.dim{opacity:.25}
+.daymap .pin:focus{outline:none}
+.daymap .pin:focus-visible circle{stroke-width:4}
+.daymap .home rect{fill:var(--ink)}
+.daymap .home text{fill:var(--surface);font-size:11px;font-weight:600;text-anchor:middle;dominant-baseline:central}
+.mapfoot{padding:14px 18px;border-top:1px solid var(--line)}
+.mapfoot p{margin:0 0 10px;font-size:14px;color:var(--muted)}
+.mapfoot p b{color:var(--ink);font-weight:600}
+.mapfoot .stay{display:flex;gap:10px;align-items:baseline}
+.mapfoot .stay .tag{flex:0 0 auto;font-size:12px;font-weight:600;background:var(--ink);color:var(--surface);border-radius:4px;padding:0 6px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border-radius:10px;background:var(--accent);color:var(--surface);text-decoration:none;font-size:14px;font-weight:600;border:0;cursor:pointer}
+.btn:hover{filter:brightness(1.08)}
+
+.budget{padding:16px 18px}
+.budget h3{margin:0 0 4px;font-size:16px;font-weight:600}
+.budget .sub{font-size:13px;color:var(--muted);margin:0 0 10px}
+.bitem{display:grid;grid-template-columns:22px 1fr auto;gap:8px;align-items:baseline;padding:7px 0;border-top:1px solid var(--line);font-size:14px}
+.bitem:first-of-type{border-top:0}
+.bitem .amt{font-variant-numeric:tabular-nums;white-space:nowrap}
+.bitem.opt .lab{color:var(--muted)}
+.bitem.opt.on .lab{color:var(--ink)}
+.bitem input{width:16px;height:16px;margin:0;accent-color:var(--accent)}
+.bitem .optl{font-size:11px;border:1px solid var(--line);border-radius:4px;padding:0 5px;margin-left:6px;color:var(--muted);white-space:nowrap}
+.btotal{margin-top:8px;padding-top:10px;border-top:2px solid var(--ink);display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.btotal .loc{font-weight:600;font-variant-numeric:tabular-nums}
+.btotal .krw{font-family:"Gowun Batang",serif;font-size:20px;font-weight:700}
+
+.warn{background:var(--warnbg);border-left:4px solid var(--warnline);color:var(--warnink);padding:12px 14px;border-radius:0 10px 10px 0;font-size:14px;margin-bottom:16px}
+.warn b{font-weight:600}
+
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip{all:unset;cursor:pointer;font-size:13px;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);display:inline-flex;align-items:center;gap:6px}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+.dot.sight{background:var(--c-sight)}.dot.food{background:var(--c-food)}.dot.cafe{background:var(--c-cafe)}.dot.night{background:var(--c-night)}.dot.xmas{background:var(--c-xmas)}.dot.move{background:var(--muted)}
+
+.list{display:flex;flex-direction:column}
+.stop{display:grid;grid-template-columns:56px 1fr;gap:0 14px;padding:16px 0;border-bottom:1px solid var(--line);scroll-margin-top:140px}
+.stop:first-child{padding-top:4px}
+.stop .time{font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums;padding-top:3px}
+.stop .row{display:flex;align-items:flex-start;gap:10px}
+.stop .num{flex:0 0 auto;width:24px;height:24px;border-radius:50%;border:2px solid var(--accent);color:var(--accent);font-size:12px;font-weight:600;display:grid;place-items:center;margin-top:2px}
+.stop.on .num{background:var(--accent);color:var(--surface)}
+.stop h3{margin:0;font-size:17px;font-weight:600;line-height:1.4;flex:1;cursor:pointer}
+.stop h3 .optl{font-size:12px;font-weight:500;border:1px solid var(--line);border-radius:4px;padding:0 6px;margin-left:6px;color:var(--muted);vertical-align:2px}
+.stop .en{margin:2px 0 6px 34px;font-size:13px;color:var(--muted)}
+.stop .cat{margin-left:34px;font-size:12px;display:inline-flex;align-items:center;gap:6px;color:var(--muted)}
+.stop .desc{margin:8px 0 0 34px}
+.stop .tip{margin:8px 0 0 34px;font-size:14px;padding:8px 12px;background:var(--surface2);border-left:3px solid var(--accent);border-radius:0 8px 8px 0}
+.stop .warn{margin:8px 0 0 34px;padding:8px 12px;border-left-width:3px}
+.stop .links{margin:10px 0 0 34px;font-size:14px}
+.stop .links a{color:var(--accent);font-weight:500;text-underline-offset:3px}
+.stop.hidden{display:none}
+.fav{all:unset;cursor:pointer;width:32px;height:32px;display:grid;place-items:center;border-radius:50%;flex:0 0 auto;margin-top:-4px}
+.fav:hover{background:var(--surface2)}
+.fav svg{width:20px;height:20px;fill:none;stroke:var(--muted);stroke-width:1.8}
+.fav[aria-pressed="true"] svg{fill:var(--swiss);stroke:var(--swiss)}
+.fav:focus-visible{outline:2px solid var(--accent)}
+.empty{padding:28px;text-align:center;color:var(--muted);background:var(--surface);border:1px dashed var(--line);border-radius:14px}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px}
+.panel h3{font-family:"Gowun Batang",serif;font-size:21px;margin:0 0 14px}
+.twocol{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px}
+.full{grid-column:1/-1}
+.rates{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.rates label{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted)}
+.rates .inp{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--surface2)}
+.rates input{border:0;background:transparent;width:100%;font-size:17px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}
+.rates input:focus{outline:none}
+.rates .inp:focus-within{outline:2px solid var(--ink);outline-offset:1px}
+.bigtotal{display:flex;flex-wrap:wrap;gap:12px 28px;align-items:baseline;margin-top:18px}
+.bigtotal .k{font-family:"Gowun Batang",serif;font-size:clamp(30px,5vw,42px);font-weight:700;line-height:1.1}
+.bigtotal .s{color:var(--muted);font-size:14px}
+.cur3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:18px}
+.cur3 > div{border:1px solid var(--line);border-radius:14px;padding:14px}
+.cur3 .c{font-size:13px;color:var(--muted)}
+.cur3 .v{font-size:20px;font-weight:600;font-variant-numeric:tabular-nums}
+.cur3 .w{font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:520px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:600;color:var(--muted);font-size:13px}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.sub td{font-weight:600;background:var(--surface2)}
+tr.clickable{cursor:pointer}
+tr.clickable:hover td{background:var(--surface2)}
+.toggle{display:flex;align-items:center;gap:10px;margin-top:14px;font-size:14px;cursor:pointer}
+.toggle input{width:18px;height:18px;accent-color:var(--ink)}
+.advice{margin:0;padding:0;list-style:none}
+.advice li{padding:12px 0;border-top:1px solid var(--line)}
+.advice li:first-child{border-top:0;padding-top:0}
+.advice b{display:block;font-weight:600;margin-bottom:2px}
+.advice span{font-size:14px;color:var(--muted)}
+.timeline{list-style:none;margin:0;padding:0;counter-reset:leg}
+.timeline li{position:relative;padding:0 0 18px 40px;counter-increment:leg}
+.timeline li::before{content:counter(leg);position:absolute;left:0;top:0;width:26px;height:26px;border-radius:50%;background:var(--surface2);border:1px solid var(--line);display:grid;place-items:center;font-size:12px;font-weight:600}
+.timeline li::after{content:"";position:absolute;left:13px;top:28px;bottom:2px;width:1px;background:var(--line)}
+.timeline li:last-child::after{display:none}
+.timeline b{display:block;font-weight:600}
+.timeline span{font-size:14px;color:var(--muted)}
+.check{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-top:1px solid var(--line);cursor:pointer}
+.check:first-of-type{border-top:0}
+.check input{width:18px;height:18px;margin-top:3px;accent-color:var(--ink)}
+.check.done span{text-decoration:line-through;color:var(--muted)}
+.check small{display:block;color:var(--muted);font-size:13px}
+.notice{margin-top:24px;font-size:13px;color:var(--muted)}
+.favgroup{margin-bottom:28px}
+.favgroup h3{font-family:"Gowun Batang",serif;font-size:22px;margin:0 0 6px}
+
+@media (max-width:860px){
+  .grid,.twocol{grid-template-columns:1fr}
+  .side{position:static}
+  .legs{grid-template-columns:1fr}
+  .legs button{border-right:0;border-bottom:1px solid var(--line);flex-direction:row;justify-content:space-between;align-items:center}
+  .legs button:last-child{border-bottom:0}
+}
+@media (max-width:560px){
+  .wrap{padding:0 14px}
+  header.hero{padding-top:24px}
+  .stop{grid-template-columns:1fr}
+  .stop .time{padding:0 0 4px 34px}
+  .rates,.cur3{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  .routemap .draw{animation:none;stroke-dashoffset:0}
+  .routemap .fade{animation:none;opacity:1}
+}
+</style>
+</head>
+<body data-city="swiss">
+
+<header class="hero wrap">
+  <h1>병우❤️지은 신혼여행</h1>
+  <p class="lede">11월 20일 출국, 13박 15일 신혼여행. 예약하신 숙소를 기준으로 하루 동선을 짜고, 음식과 입장료 같은 현지 지출을 날마다 계산했어요. 금액은 모두 두 사람 기준이에요.</p>
+  <div class="sum" id="herosum"></div>
+  <div class="routecard">
+    <svg class="routemap" id="routemap" viewBox="0 0 940 480" role="img" aria-label="취리히, 인터라켄, 루체른, 프라하, 부다페스트를 잇는 여행 루트 지도"></svg>
+    <div class="legs">
+      <button data-go="swiss"><span class="d">11/20–11/26</span><span class="n">스위스<i>6박</i></span></button>
+      <button data-go="prague"><span class="d">11/26–11/29</span><span class="n">프라하<i>3박</i></span></button>
+      <button data-go="budapest"><span class="d">11/29–12/3</span><span class="n">부다페스트<i>4박</i></span></button>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="여행 구간">
+  <div class="wrap" role="tablist" id="tabs"></div>
+</nav>
+
+<main class="wrap" id="main"></main>
+
+<script>
+const TYPES = { sight:"명소", food:"식사", cafe:"카페·디저트", night:"야경·전망", xmas:"크리스마스 마켓", move:"이동" };
+const CUR = { CHF:"스위스 프랑", CZK:"체코 코루나", HUF:"헝가리 포린트" };
+const DEFAULT_RATES = { CHF:1620, CZK:65, HUF:4.3 };
+
+const TRIP = {
+  swiss: {
+    name:"스위스", sub:"취리히 1박, 인터라켄 3박, 루체른 2박",
+    facts:[["일몰","16:45 무렵"],["통화","CHF"],["교통","스위스 패스로 기차·버스·유람선 무료"]],
+    days:[
+      { date:"11/20", dow:"금", title:"출국, 취리히 도착",
+        stay:{name:"레오나르도 부티크 호텔 리기호프",en:"Leonardo Boutique Hotel Rigihof Zurich",lat:47.3829,lng:8.5481},
+        move:"<b>인천 00:20 → 도하 04:50</b> (QR859) <b>→ 도하 08:15 → 취리히 13:40</b> (QR95). 예약번호 D7BJKV. 공항에서 숙소까지 트램, 17:00 체크인",
+        stops:[
+          {t:"00:20",type:"move",nomap:true,name:"인천공항 제1여객터미널 출발",en:"Incheon International Airport Terminal 1",lat:37.4602,lng:126.4407,desc:"카타르항공 체크인 카운터에서 탑승 수속. QR859편, 예약번호 D7BJKV, 비행 약 10시간 30분.",tip:"자정 직후 출발이라 11월 19일 밤 9시 반쯤까지 공항에 도착하세요."},
+          {t:"06:00",type:"move",nomap:true,name:"도하 알 마하 라운지 (사우스 노드)",en:"Al Maha Lounge South, Hamad International Airport",lat:25.2731,lng:51.6081,desc:"04:50 도하 도착, 08:15 출발까지 라운지에서 쉬어요. 메인 터미널 C1 게이트 쪽으로, 환승 보안 검색을 지나 면세점 플라자 남쪽 2층에 있어요.",tip:"다음 편은 QR95, 비행 약 6시간 20분. 라운지에서 탑승 게이트 안내를 꼭 확인하세요."},
+          {t:"13:40",type:"move",name:"취리히 공항 도착, 트램으로 숙소",en:"Zürich Flughafen",lat:47.4502,lng:8.5622,desc:"입국 심사와 짐 찾기 후 공항 앞 트램 정류장에서 시내 방향 10번 트램(T10)을 타고 빙켈리트슈트라세(Winkelriedstrasse) 정류장에서 내려요. 1인 CHF 7.2.",tip:"티켓은 정류장 발권기나 SBB 앱에서 사요. 탑승 전에 구입해야 해요."},
+          {t:"17:00",type:"move",name:"호텔 체크인",en:"Leonardo Boutique Hotel Rigihof Zurich",lat:47.3829,lng:8.5481,desc:"긴 비행 뒤라 잠깐 씻고 쉬었다가 저녁 산책을 나가요."},
+          {t:"18:00",type:"night",name:"폴리테라스 야경",en:"Polyterrasse ETH, Zürich",lat:47.3763,lng:8.5476,desc:"숙소에서 걸어서 10분 남짓. 조명 켜진 구시가 지붕과 첨탑이 한눈에 들어오는 테라스예요.",tip:"구시가로 내려갈 땐 빨간 푸니쿨라 폴리반을 타면 2분이에요."},
+          {t:"18:30",type:"xmas",name:"니더도르프 골목과 중앙역 크리스마스 마켓",en:"Christkindlimarkt Zürich HB",lat:47.3779,lng:8.5403,desc:"연말 장식이 걸린 구시가 골목을 지나 중앙역 홀 안의 실내 크리스마스 마켓으로. 크리스털 장식 대형 트리가 명물이에요.",warn:"취리히 마켓들은 11월 19–20일 무렵 개장으로 안내되고 있어요."},
+          {t:"19:15",type:"food",name:"초이크하우스켈러",en:"Zeughauskeller, Zürich",lat:47.3705,lng:8.5395,desc:"15세기 무기고를 개조한 비어홀. 취리히식 송아지 크림 볶음(게슈네첼테스)과 감자전 뢰스티가 대표 메뉴예요.",tip:"금요일 저녁이라 붐벼요. 예약하고 가세요."}
+        ],
+        budget:[["공항 → 숙소 트램 2인",14.4,"CHF"],["저녁 (초이크하우스켈러)",100,"CHF"],["마켓 글뤼바인·간식",20,"CHF"],["물·간식",15,"CHF"]]
+      },
+      { date:"11/21", dow:"토", title:"이젤트발트, 인터라켄",
+        stay:{name:"유스호스텔 인터라켄",en:"Youth Hostel Interlaken",lat:46.6905,lng:7.8697},
+        move:"<b>09:00 조식·체크아웃 → 취리히 중앙역 → 인터라켄 오스트</b> 기차 약 2시간 (패스). 인터라켄 오스트에서 이젤트발트까지 103번 버스 약 20분",
+        warn:"<b>시간 확인:</b> 9시에 체크아웃하고 출발하면 인터라켄 오스트 도착이 11시 반 안팎이라, 이젤트발트는 12시 전후가 현실적이에요. 11시에 도착하려면 취리히 중앙역에서 8시 30분쯤 기차를 타야 해요.",
+        stops:[
+          {t:"11:00",type:"sight",name:"이젤트발트",en:"Iseltwald",lat:46.7105,lng:7.9640,desc:"브리엔츠 호숫가 작은 마을. 드라마 〈사랑의 불시착〉 촬영지 선착장이 있어요.",tip:"버스는 패스로 무료. 선착장은 1인 CHF 5, 스위스 패스가 있으면 무료로 알아보셨던 내용대로 현장에서 확인하세요."},
+          {t:"13:00",type:"food",name:"점심: 인터라켄 오스트역 주변",en:"Coop Interlaken Ost",lat:46.6902,lng:7.8686,desc:"이젤트발트는 비수기라 문 연 곳이 적어요. 인터라켄으로 돌아와 역 코프나 근처 식당에서 점심을 먹고 숙소에 짐을 맡겨요."},
+          {t:"15:00",type:"move",name:"유스호스텔 인터라켄 체크인",en:"Youth Hostel Interlaken",lat:46.6905,lng:7.8697,desc:"인터라켄 오스트역 바로 옆."},
+          {t:"16:00",type:"sight",name:"회헤마테 공원 산책",en:"Höhematte, Interlaken",lat:46.6866,lng:7.8603,desc:"융프라우가 정면으로 보이는 시내 한가운데 잔디밭. 해 질 무렵 설산이 분홍빛으로 물들어요."},
+          {t:"16:15",type:"night",opt:true,name:"하더쿨름 일몰",en:"Harder Kulm",lat:46.6975,lng:7.8510,desc:"공원 산책 대신 푸니쿨라로 10분 올라가 두 호수와 융프라우 삼봉 위로 지는 해를 볼 수도 있어요. 스위스 패스로 할인돼요.",warn:"2026년 운행은 11월 29일까지로 안내돼 있어요. 흐리면 건너뛰세요."},
+          {t:"18:00",type:"food",name:"글라이스 드라이",en:"Restaurant Café Gleis 3, Bahnhofstrasse 22 Interlaken",lat:46.6858,lng:7.8555,desc:"인터라켄 서역 근처의 스위스 가정식 레스토랑. 송아지 고기 버섯 크림소스, 슈니첼, 퐁뒤가 인기예요.",tip:"월·화요일 휴무라 토요일인 이날이 딱 맞아요. 실내 좌석이 30석이 안 돼 예약을 권해요."}
+        ],
+        budget:[["점심",50,"CHF"],["저녁 (글라이스 드라이)",110,"CHF"],["커피·간식",20,"CHF"],["하더쿨름 푸니쿨라 (패스 할인)",40,"CHF",true]]
+      },
+      { date:"11/22", dow:"일", title:"그린델발트",
+        stay:{name:"유스호스텔 인터라켄",en:"Youth Hostel Interlaken",lat:46.6905,lng:7.8697},
+        move:"<b>09:00 조식 → 11:00 인터라켄 오스트 → 그린델발트 터미널</b> 기차 약 35분 (패스로 무료)",
+        warn:"<b>11월 말 그린델발트는 레저 선택지가 좁아요.</b> 피르스트(11/27까지)와 멘리헨(12/11까지) 곤돌라가 정비 중이라 피르스트 액티비티와 그곳에서 뜨는 패러글라이딩은 안 돼요. 빙하 협곡과 캐니언 스윙도 11월 중순에 시즌이 끝나요. 대신 아이거 익스프레스가 11월 21일부터 다시 운행해 <b>융프라우요흐</b>는 갈 수 있고, <b>패러글라이딩은 인터라켄 출발</b>로 할 수 있어요. 자전거는 아래 메모를 참고하세요.",
+        stops:[
+          {t:"09:30",type:"sight",opt:true,name:"인터라켄 탠덤 패러글라이딩",en:"Paragliding Interlaken",lat:46.6866,lng:7.8603,desc:"업체가 숙소로 픽업 와서 산 중턱에서 이륙하고, 회헤마테 공원에 내려앉는 10–20분 비행. 호수 두 개와 설산을 발아래로 봐요.",tip:"날씨로 당일 취소될 수 있어 2–3일 전에 예약하고 아침에 확정 연락을 받아요. 1인 CHF 170–200 안팎.",warn:"융프라우요흐와 같은 날 둘 다 하면 일정이 빠듯하고 비용도 커요. 하나만 고르는 걸 추천해요."},
+          {t:"11:00",type:"move",name:"인터라켄 오스트 출발",en:"Interlaken Ost",lat:46.6904,lng:7.8687,desc:"그린델발트행 열차. 스위스 패스로 무료."},
+          {t:"11:35",type:"move",name:"그린델발트 터미널 도착",en:"Grindelwald Terminal",lat:46.6243,lng:8.0337,desc:"아이거 익스프레스 곤돌라 승강장이 있는 새 역이에요."},
+          {t:"11:45",type:"night",opt:true,name:"융프라우요흐",en:"Jungfraujoch",lat:46.5475,lng:7.9853,desc:"아이거 익스프레스로 15분, 아이거글레처에서 열차로 갈아타 해발 3,454m 유럽 최고 기차역까지. 얼음궁전과 스핑크스 전망대, 알레치 빙하. 점심은 정상 레스토랑에서.",tip:"11:45 출발하면 12시 40분쯤 정상, 2시간 구경 후 15시 30분쯤 내려와요. 패스는 그린델발트까지만 무료라 위 구간은 25% 할인 티켓이에요.",warn:"정상은 영하 10도 안팎. 출발 전 웹캠으로 날씨를 보고, 흐리면 다음 날과 바꾸거나 건너뛰세요."},
+          {t:"15:45",type:"cafe",name:"그린델발트 마을 산책과 카페",en:"Barry's Restaurant, Grindelwald",lat:46.6240,lng:8.0362,desc:"아이거 북벽을 올려다보며 메인 거리를 걷고, 역 앞 배리스 레스토랑 같은 산장 분위기 카페에서 따뜻한 음료.",tip:"융프라우요흐에 안 가면 이 시간대를 점심과 마을 산책으로 넉넉하게 쓰세요. 일요일이라 일반 상점은 닫은 곳이 많아요."},
+          {t:"18:30",type:"food",name:"휘지 비어하우스",en:"Hüsi Bierhaus, Interlaken",lat:46.6878,lng:7.8618,desc:"인터라켄으로 돌아와 수제 맥주와 버거로 편하게 저녁.",tip:"자전거 메모: 옐로벨로는 겨울 투어가 12월부터이고, 11월 말은 아침저녁으로 길이 얼 수 있어 이번 일정엔 넣지 않았어요. 꼭 타고 싶으면 옐로벨로나 임보덴 바이크에 23일 대여가 되는지 미리 메일로 문의해 보세요."}
+        ],
+        budget:[["점심",50,"CHF"],["저녁 (휘지 비어하우스)",80,"CHF"],["커피·간식",20,"CHF"],["융프라우요흐 왕복 (패스 25% 할인)",300,"CHF",true],["인터라켄 패러글라이딩 2인",360,"CHF",true]]
+      },
+      { date:"11/23", dow:"월", title:"라우터브루넨, 뮈렌, 김멜발트",
+        stay:{name:"유스호스텔 인터라켄",en:"Youth Hostel Interlaken",lat:46.6905,lng:7.8697},
+        move:"<b>인터라켄 오스트 → 라우터브루넨 → 그뤼치알프 → 뮈렌</b>, 내려올 땐 <b>김멜발트 → 슈테헬베르크 → 141번 버스 → 라우터브루넨 → 인터라켄</b>. 모두 스위스 패스로 이용",
+        warn:"<b>운행 확인 완료:</b> 그뤼치알프–뮈렌 노선 정비는 10/26–11/6, 슈테헬베르크–김멜발트–뮈렌 케이블카 정비는 10/19–10/30이라 이날은 둘 다 정상 운행해요. 트뤼멜바흐 폭포는 겨울 휴장이에요.",
+        stops:[
+          {t:"08:50",type:"move",name:"조식 후 인터라켄 동역으로",en:"Youth Hostel Interlaken",lat:46.6905,lng:7.8697,desc:"숙소에서 역까지 걸어서 몇 분."},
+          {t:"09:04",type:"move",name:"BOB 열차 탑승",en:"Interlaken Ost",lat:46.6904,lng:7.8687,desc:"라우터브루넨행, 약 20분."},
+          {t:"09:30",type:"sight",name:"라우터브루넨, 슈타우프바흐 폭포 산책",en:"Staubbach Falls, Lauterbrunnen",lat:46.5937,lng:7.9077,desc:"역에서 폭포 방향으로 약 20분. 절벽에서 300m 가까이 떨어지는 폭포와 교회가 함께 나오는 마을 입구 쪽이 대표 포토 스팟이에요."},
+          {t:"10:30",type:"move",name:"그뤼치알프 케이블카",en:"Lauterbrunnen Grütschalp cable car",lat:46.5985,lng:7.9105,desc:"라우터브루넨역 맞은편 승강장에서 절벽 위 그뤼치알프까지 약 5분."},
+          {t:"10:40",type:"move",name:"그뤼치알프 → 뮈렌 산악열차",en:"Grütschalp",lat:46.6020,lng:7.8860,desc:"융프라우 삼봉을 옆에 끼고 달리는 작은 열차, 약 14분. 진행 방향 왼쪽 창가가 명당이에요."},
+          {t:"11:00",type:"sight",name:"뮈렌 마을 산책",en:"Mürren",lat:46.5590,lng:7.8920,desc:"차가 다니지 않는 절벽 위 마을. 계곡 건너 아이거, 묀히, 융프라우를 정면으로 마주해요.",warn:"비수기라 쉬는 가게가 많아요."},
+          {t:"12:00",type:"food",name:"슈태거스튀블리",en:"Restaurant Stägerstübli, Mürren",lat:46.5592,lng:7.8927,desc:"뮈렌 마을 한가운데의 오래된 산장식 레스토랑. 뢰스티와 스위스 가정식.",tip:"비수기 휴무일 수 있어요. 문을 닫았으면 카페 리브(Cafe Liv)로 가세요."},
+          {t:"12:30",type:"sight",name:"김멜발트까지 걷기",en:"Gimmelwald",lat:46.5470,lng:7.8910,desc:"뮈렌에서 김멜발트까지 내리막 산책길. 나무 오두막이 모인 조용한 마을까지 사진 찍으며 여유 있게 걸어요.",warn:"눈이 쌓였으면 미끄러워요. 접지력 좋은 신발을 신으세요."},
+          {t:"14:00",type:"move",name:"김멜발트 → 슈테헬베르크 케이블카",en:"Gimmelwald Schilthornbahn",lat:46.5465,lng:7.8895,desc:"계곡 바닥까지 약 5분 하산."},
+          {t:"14:20",type:"move",name:"141번 버스로 라우터브루넨",en:"Stechelberg Schilthornbahn",lat:46.5550,lng:7.8995,desc:"하부 승강장 바로 앞 정류장, 약 13분. 30분 간격이라 놓치면 기다려야 해요."},
+          {t:"14:40",type:"move",name:"라우터브루넨에서 BOB 환승",en:"Lauterbrunnen station",lat:46.5985,lng:7.9095,desc:"인터라켄 오스트행, 약 20분."},
+          {t:"15:10",type:"move",name:"인터라켄 도착, 숙소에서 휴식",en:"Youth Hostel Interlaken",lat:46.6905,lng:7.8697,desc:"씻고 쉬면서 정비."},
+          {t:"17:30",type:"food",name:"베비스 (추천)",en:"Restaurant Bebbis, Interlaken",lat:46.6860,lng:7.8570,desc:"치즈 퐁뒤와 라클레트 같은 스위스 전통 요리를 아늑한 산장 분위기에서. 21일 글라이스 드라이에서 퐁뒤를 안 드셨다면 여기서.",tip:"월요일 영업 여부를 미리 확인하세요. 대안은 회헤마테 앞 그랜드 카페 슈(Schuh)예요."},
+          {t:"20:00",type:"night",name:"회헤베크 저녁 산책",en:"Höheweg, Interlaken",lat:46.6870,lng:7.8600,desc:"회헤마테 공원을 따라 조명 켜진 거리를 걷고 일정 마무리."}
+        ],
+        budget:[["점심 (슈태거스튀블리)",60,"CHF"],["카페",20,"CHF"],["저녁 (베비스)",100,"CHF"]]
+      },
+      { date:"11/24", dow:"화", title:"루체른 구시가",
+        stay:{name:"코비 아파트먼트 팔켄플라츠",en:"KoBi Apartments Falkenplatz Luzern",lat:47.0531,lng:8.3072},
+        move:"<b>08:00 조식·체크아웃 → 09:30 인터라켄 동역 → 12:00 루체른역</b> (패스). 루체른–인터라켄 익스프레스 창가 자리 추천",
+        stops:[
+          {t:"12:00",type:"move",name:"루체른역 도착",en:"Luzern Bahnhof",lat:47.0502,lng:8.3093,desc:"역 정문의 옛 기차역 아치가 루체른의 첫인상이에요."},
+          {t:"12:30",type:"move",name:"숙소 도착",en:"KoBi Apartments Falkenplatz Luzern",lat:47.0531,lng:8.3072,desc:"구시가 안쪽 팔켄플라츠. 역에서 카펠교를 건너 걸어서 10분 안팎."},
+          {t:"13:00",type:"food",name:"갈리커 (점심 추천)",en:"Wirtshaus Galliker, Luzern",lat:47.0498,lng:8.3026,desc:"루체른 전통 요리를 내는 오래된 선술집. 페이스트리 속에 고기 스튜를 채운 쿠겔리파스테테가 명물이에요.",tip:"휴무일과 점심 영업 시간을 미리 확인하세요."},
+          {t:"14:00",type:"sight",name:"카펠교",en:"Kapellbrücke, Luzern",lat:47.0517,lng:8.3077,desc:"14세기 목조 지붕 다리. 천장의 삼각 판화와 팔각 물탑이 포인트예요."},
+          {t:"14:40",type:"sight",name:"바인마르크트와 구시가 광장",en:"Weinmarkt, Luzern",lat:47.0521,lng:8.3054,desc:"벽화로 장식된 중세 건물이 둘러싼 광장. 코른마르크트, 히르셴플라츠로 골목이 이어져요."},
+          {t:"15:30",type:"sight",name:"빈사의 사자상",en:"Löwendenkmal, Luzern",lat:47.0585,lng:8.3104,desc:"프랑스 혁명 때 목숨을 잃은 스위스 근위병을 기리는 바위 조각."},
+          {t:"16:30",type:"night",name:"호숫가 노을 산책",en:"Schweizerhofquai, Luzern",lat:47.0540,lng:8.3115,desc:"슈바이처호프 앞 호숫가 산책로에서 리기산과 필라투스 위로 지는 해를 봐요."},
+          {t:"18:00",type:"xmas",name:"루돌프 크리스마스 마켓",en:"Rudolfs Weihnacht, Inseli-Park Luzern",lat:47.0488,lng:8.3125,desc:"역 뒤편 호숫가 인젤리 공원의 크리스마스 마켓. 2026년엔 11월 20일부터 열려요. 퐁뒤 샬레에서 저녁을 해결할 수도 있어요."},
+          {t:"19:30",type:"xmas",opt:true,name:"아이스차우버 야외 아이스링크",en:"Eiszauber Luzern, Europaplatz",lat:47.0505,lng:8.3120,desc:"KKL 앞 유로파플라츠의 겨울 아이스링크와 바. 마켓 바로 옆이라 손잡고 한 바퀴 돌기 좋아요."}
+        ],
+        budget:[["점심 (갈리커)",60,"CHF"],["저녁 (마켓·퐁뒤)",70,"CHF"],["커피·간식",20,"CHF"],["아이스링크 2인 (스케이트 대여)",30,"CHF",true]]
+      },
+      { date:"11/25", dow:"수", title:"리기산",
+        stay:{name:"코비 아파트먼트 팔켄플라츠",en:"KoBi Apartments Falkenplatz Luzern",lat:47.0531,lng:8.3072},
+        move:"<b>루체른 1번 선착장 → 비츠나우</b> 유람선 약 1시간 → <b>리기 쿨름</b> 빨간 산악열차 → 하산은 <b>아르트골다우</b>에서 SBB로 루체른 (세이버 데이 패스 구매 완료)",
+        warn:"<b>운행 확인 완료:</b> 비츠나우·아르트골다우–리기 쿨름 산악열차는 12월 12일까지 가을·겨울 시간표로 운행해요. 웨기스 케이블카만 11/23–27 정비라 이번 루트와는 상관없어요. 유람선은 겨울이라 편수가 적으니 꼭 15분 전에 도착하세요.",
+        stops:[
+          {t:"08:00",type:"food",name:"셀프 조식",en:"KoBi Apartments Falkenplatz Luzern",lat:47.0531,lng:8.3072,desc:"전날 마트에서 사 둔 빵과 요거트로 숙소에서 아침.",tip:"24일 저녁에 역 지하 코프나 미그로스에서 장을 봐 두세요."},
+          {t:"09:00",type:"move",name:"루체른 1번 선착장 (Pier 1)",en:"Luzern Bahnhofquai Pier 1",lat:47.0510,lng:8.3105,desc:"중앙역 바로 앞 호숫가 선착장, 숙소에서 걸어서 10분. 비츠나우행 09:10 출발(10:09 도착) 또는 10:12 출발(11:09 도착).",tip:"출발 15분 전까지 도착해야 해요."},
+          {t:"11:09",type:"move",name:"비츠나우 하선, 리기 산악열차 탑승",en:"Vitznau Rigi Bahn",lat:47.0103,lng:8.4832,desc:"선착장 바로 옆이 빨간 리기 산악열차역. 리기 쿨름행에 타요."},
+          {t:"12:00",type:"night",name:"리기 쿨름 정상",en:"Rigi Kulm",lat:47.0565,lng:8.4853,desc:"'산들의 여왕'이라 불리는 해발 1,798m 정상. 맑으면 루체른 호수와 알프스 봉우리들이 360도로 펼쳐지고, 아래로 구름바다가 깔리는 날도 많아요."},
+          {t:"12:45",type:"food",name:"리기 쿨름 호텔 레스토랑",en:"Hotel Rigi Kulm",lat:47.0560,lng:8.4846,desc:"정상 바로 아래 호텔 레스토랑에서 전망과 함께 점심."},
+          {t:"14:48",type:"move",name:"아르트골다우행 파란 산악열차",en:"Rigi Kulm station",lat:47.0556,lng:8.4840,desc:"리기 쿨름역 보통 2번 승강장(Gleis 2)에서 출발해요."},
+          {t:"15:38",type:"move",name:"아르트골다우 도착, SBB 환승",en:"Arth-Goldau",lat:47.0485,lng:8.5480,desc:"루체른 중앙역행 열차로 갈아타 약 30분."},
+          {t:"16:20",type:"move",name:"루체른 도착",en:"Luzern Bahnhof",lat:47.0502,lng:8.3093,desc:"숙소에서 잠깐 쉬고 저녁에 나가요."},
+          {t:"18:00",type:"food",name:"라트하우스 브라우어라이",en:"Rathaus Brauerei, Luzern",lat:47.0518,lng:8.3062,desc:"로이스 강변 아케이드 아래의 하우스 맥주 양조장 레스토랑. 카펠교 야경을 보며 스위스 마지막 밤 저녁."},
+          {t:"19:30",type:"xmas",name:"카펠교 야경과 크리스마스 마켓 산책",en:"Kapellbrücke, Luzern",lat:47.0517,lng:8.3077,desc:"조명 켜진 카펠교를 건너 루돌프 마켓까지 다시 한 바퀴. 다음 날 아침이 이르니 일찍 들어가세요."}
+        ],
+        budget:[["셀프 조식 장보기",15,"CHF"],["점심 (리기 쿨름)",50,"CHF"],["저녁 (라트하우스 브라우어라이)",80,"CHF"],["간식",5,"CHF"]]
+      }
+    ]
+  },
+  prague: {
+    name:"프라하", sub:"호텔 프로코프 스퀘어 3박 (지슈코프)",
+    facts:[["일몰","16:00 무렵"],["통화","CZK"],["팁","10% 내외"]],
+    days:[
+      { date:"11/26", dow:"목", title:"취리히 공항 → 프라하 구시가",
+        stay:{name:"호텔 프로코프 스퀘어",en:"Hotel Prokop Square Prague",lat:50.0846,lng:14.4502},
+        move:"<b>07:35 루체른역 → 08:44 취리히 공항역</b> 직행 IR75 (발권 완료) → <b>12:35 출발 → 13:55 프라하</b> → 숙소까지 택시 약 30분",
+        stops:[
+          {t:"07:00",type:"move",nomap:true,name:"체크아웃, 루체른역으로",en:"Luzern Bahnhof",lat:47.0502,lng:8.3093,desc:"07:35 취리히 공항행 직행 IR75. 짐이 많으니 여유 있게 나가세요."},
+          {t:"08:44",type:"food",nomap:true,name:"취리히 공항 도착, 아침 식사",en:"Zürich Flughafen",lat:47.4502,lng:8.5622,desc:"공항역에 내려 체크인 전후로 아침.",tip:"이 식사는 스위스 프랑으로 내요. 남은 프랑을 쓰기 좋은 시간이에요."},
+          {t:"13:55",type:"move",name:"프라하 공항 도착, 짐 찾기",en:"Václav Havel Airport Prague",lat:50.1008,lng:14.2600,desc:"수하물을 찾고 터미널 2 도착장으로 나가요."},
+          {t:"14:50",type:"move",name:"우버 택시로 숙소",en:"Václav Havel Airport Prague Terminal 2",lat:50.1062,lng:14.2668,desc:"우버 에어포트 추천. 터미널 2 도착장의 우버 키오스크나 서비스 카운터를 이용하면 편해요. 약 30분, CZK 800 안팎."},
+          {t:"15:30",type:"move",name:"호텔 체크인",en:"Hotel Prokop Square Prague",lat:50.0846,lng:14.4502,desc:"지슈코프의 숙소에 짐을 풀어요."},
+          {t:"16:00",type:"move",name:"리판스카 정류장에서 트램",en:"Lipanská tram stop, Praha",lat:50.0843,lng:14.4528,desc:"시내 중심 방향 트램을 타고 진드르지슈스카(Jindřišská)에서 내려 구시가까지 걸어서 약 15분. 전체 약 30분.",tip:"티켓은 트램 안 카드 단말기에서 30분권을 사요. 2인 CZK 78."},
+          {t:"17:00",type:"sight",name:"구시가 구경",en:"Old Town Square, Praha",lat:50.0875,lng:14.4213,desc:"조명 켜진 구시가 광장과 틴 성당, 천문시계. 첫날은 분위기만 느끼고 자세한 구경은 28일에 해요.",warn:"구시가 광장 대형 크리스마스 마켓은 28일 개장 예정이라 이날은 준비 중일 수 있어요."},
+          {t:"18:30",type:"food",name:"우 메드비드쿠 (저녁 추천)",en:"U Medvídků, Praha",lat:50.0835,lng:14.4195,desc:"15세기부터 이어진 구시가 양조 펍. 체코 전통 요리와 직접 빚은 맥주로 프라하 첫 저녁."},
+          {t:"21:00",type:"move",name:"호텔 복귀",en:"Hotel Prokop Square Prague",lat:50.0846,lng:14.4502,desc:"진드르지슈스카에서 트램으로 리판스카까지. 귀가 티켓도 같은 방법으로 사요."}
+        ],
+        budget:[["취리히 공항 아침",40,"CHF"],["공항 → 숙소 우버",800,"CZK"],["트램 30분권 왕복 2인",156,"CZK"],["저녁 (우 메드비드쿠)",1600,"CZK"],["간식·물",350,"CZK"]]
+      },
+      { date:"11/27", dow:"금", title:"프라하 성, 카를교 야경",
+        stay:{name:"호텔 프로코프 스퀘어",en:"Hotel Prokop Square Prague",lat:50.0846,lng:14.4502},
+        move:"<b>리판스카 정류장(숙소에서 걸어서 5분) → 15번 트램 → 말로스트란스카</b> 약 30분. 트램 안 카드 단말기에서 30분권",
+        stops:[
+          {t:"08:00",type:"food",name:"조식 먹고 준비",en:"Hotel Prokop Square Prague",lat:50.0846,lng:14.4502,desc:"호텔 조식 후 9시 30분에 출발해요."},
+          {t:"09:30",type:"move",name:"리판스카에서 15번 트램",en:"Lipanská tram stop, Praha",lat:50.0843,lng:14.4528,desc:"말로스트란스카(Malostranská) 방향으로 약 30분.",tip:"30분권은 트램 안 카드 단말기에서 사요. 2인 CZK 78."},
+          {t:"10:00",type:"move",name:"말로스트란스카 하차, 프라하 성으로",en:"Malostranská, Praha",lat:50.0909,lng:14.4096,desc:"성 아래 정류장이에요. 옛 성 계단을 15분쯤 걸어 올라가면 성 동쪽 입구가 나와요.",tip:"계단으로 오르면 황금소로 쪽부터 보게 돼요. 적어 두신 순서대로 대성당부터 보려면 같은 정류장에서 22번 트램으로 갈아타 '프라주스키 흐라드(Pražský hrad)'에서 내리세요."},
+          {t:"10:30",type:"sight",name:"성 비투스 대성당 → 구왕궁 → 성 이르지 바실리카 → 황금소로",en:"St. Vitus Cathedral, Prague Castle",lat:50.0909,lng:14.4005,desc:"프라하 성 통합권 하나로 네 곳을 차례로 봐요. 대성당의 스테인드글라스, 구왕궁의 블라디슬라프 홀, 로마네스크 바실리카, 알록달록한 작은 집들이 늘어선 황금소로까지. 13시쯤 마무리돼요.",tip:"정오에 정문에서 근위병 교대식이 있어요."},
+          {t:"13:30",type:"food",name:"우 글라우비추",en:"U Glaubiců, Malostranské náměstí, Praha",lat:50.0881,lng:14.4036,desc:"말라스트라나 광장 앞의 체코 전통 레스토랑에서 점심. 성에서 내려오는 길에 있어요.",tip:"금요일 점심이라 붐빌 수 있어요. 예약하면 편해요."},
+          {t:"15:00",type:"sight",name:"네루도바 거리",en:"Nerudova, Praha",lat:50.0886,lng:14.4002,desc:"성으로 이어지는 언덕길. 집집마다 문 위에 붙은 옛 문패 그림(황금 열쇠, 붉은 독수리 등)을 찾아보며 걸어요."},
+          {t:"16:30",type:"night",name:"카를교 야경",en:"Charles Bridge, Praha",lat:50.0865,lng:14.4114,desc:"16시쯤 해가 지니 이 시간이면 조명이 막 켜지기 시작해요. 다리 위에서 프라하 성 야경을 봐요."},
+          {t:"17:15",type:"sight",name:"천문시계",en:"Prague Astronomical Clock",lat:50.0870,lng:14.4207,desc:"카를교에서 구시가 광장까지 걸어서 10분. 정각에 사도 인형 공연이 있으니 18시 전에 맞춰 가 보세요."},
+          {t:"18:00",type:"food",nomap:true,name:"강남 코리안 다이닝 (펍, 바비큐, 노래방)",en:"GANGNAM Korean Dining pub bbq Karaoke Prague",lat:50.0870,lng:14.4207,desc:"한국식 바비큐와 노래방으로 신나는 저녁.",warn:"이 가게는 정확한 위치를 확인하지 못해서 지도에 표시하지 않았어요. 아래 구글 지도 링크로 위치와 영업시간을 확인해 주세요."},
+          {t:"20:00",type:"move",name:"귀가",en:"Hotel Prokop Square Prague",lat:50.0846,lng:14.4502,desc:"트램으로 리판스카까지 돌아와요."}
+        ],
+        budget:[["트램 30분권 왕복 2인",156,"CZK"],["프라하 성 통합권 2장",1000,"CZK"],["점심 (우 글라우비추)",900,"CZK"],["커피·간식",300,"CZK"],["저녁 (강남 코리안 다이닝)",2000,"CZK"],["노래방",600,"CZK",true]]
+      },
+      { date:"11/28", dow:"토", title:"국립박물관, 크리스마스 마켓",
+        stay:{name:"호텔 프로코프 스퀘어",en:"Hotel Prokop Square Prague",lat:50.0846,lng:14.4502},
+        move:"<b>낮엔 걸어서</b> 이동하고, 밤에 <b>바츨라프 광장에서 9번 트램</b>으로 리판스카까지 돌아와요",
+        stops:[
+          {t:"10:00",type:"food",name:"조식 먹고 출발",en:"Hotel Prokop Square Prague",lat:50.0846,lng:14.4502,desc:"느긋하게 아침을 먹고 출발해요."},
+          {t:"11:00",type:"xmas",name:"이르지호 즈 포데브라트 광장",en:"Náměstí Jiřího z Poděbrad, Praha",lat:50.0777,lng:14.4498,desc:"숙소에서 걸어서 20분. 독특한 현대식 교회 앞 광장으로, 현지인이 찾는 파머스 마켓과 연말 장터가 서요.",warn:"장터 운영일과 시간은 그 주에 한 번 확인하세요."},
+          {t:"12:30",type:"sight",name:"국립박물관",en:"National Museum, Praha",lat:50.0790,lng:14.4307,desc:"바츨라프 광장 끝에 선 웅장한 신르네상스 건물. 중앙 홀과 돔, 계단에서 내려다보는 광장 풍경이 압권이에요.",tip:"입장료는 1인 CZK 300 안팎으로 잡았어요. 방문 전 공식 사이트에서 확인하세요."},
+          {t:"15:00",type:"food",name:"후시네츠 (늦은 점심)",en:"Restaurace Husinec, Mezibranská 13, Praha",lat:50.0784,lng:14.4294,desc:"국립박물관 바로 옆의 체코 전통 레스토랑. 구운 거위와 오리 요리로 유명해요.",tip:"매일 오전 11시부터 밤 11시까지 열어서 늦은 점심에도 좋아요."},
+          {t:"16:30",type:"xmas",name:"바츨라프 광장에서 구시가지로 (크리스마스 마켓)",en:"Wenceslas Square Christmas Market",lat:50.0810,lng:14.4270,desc:"바츨라프 광장 마켓을 지나 구시가 광장 대형 마켓까지 걸어요. 구운 소시지와 뜨거운 와인 스바르자크를 맛보세요.",warn:"두 마켓 모두 11월 28일 개장으로 안내되고 있어요. 개장 첫날이라 아주 붐빌 수 있어요."},
+          {t:"17:30",type:"xmas",name:"구시가 광장 크리스마스 마켓",en:"Old Town Square Christmas Market",lat:50.0875,lng:14.4213,desc:"틴 성당 앞 대형 트리와 노점이 어우러지는 프라하 최대 마켓. 저녁은 마켓 음식으로 해결해요.",tip:"인파 속에서는 소지품을 조심하세요."},
+          {t:"20:00",type:"move",name:"바츨라프 광장 B 승강장에서 9번 트램",en:"Václavské náměstí tram stop, Praha",lat:50.0825,lng:14.4258,desc:"Václavské náměstí 정류장 B 승강장에서 9번 트램을 타고 리판스카(Lipanská)에서 내려요."},
+          {t:"21:00",type:"move",name:"숙소 복귀",en:"Hotel Prokop Square Prague",lat:50.0846,lng:14.4502,desc:"다음 날 기차 이동이 있으니 짐을 미리 싸 두세요."}
+        ],
+        budget:[["국립박물관 2장",700,"CZK"],["늦은 점심 (후시네츠)",900,"CZK"],["마켓 저녁·스바르자크",700,"CZK"],["커피",200,"CZK"],["트램 30분권 2인",78,"CZK"]]
+      }
+    ]
+  },
+  budapest: {
+    name:"부다페스트", sub:"풀만 부다페스트 4박 (오페라하우스 근처)",
+    facts:[["일몰","15:55 무렵"],["통화","HUF"],["팁","10% 내외, 서비스료 포함 여부 확인"]],
+    days:[
+      { date:"11/29", dow:"일", title:"기차로 부다페스트",
+        stay:{name:"풀만 부다페스트",en:"Pullman Budapest",lat:47.5050,lng:19.0580},
+        move:"<b>11:37 프라하 중앙역 → 18:28 부다페스트 서역(뉴가티)</b>, EC 279. 이메일로 받은 PDF 승차권으로 탑승",
+        stops:[
+          {t:"09:00",type:"food",nomap:true,name:"조식 먹고 체크아웃",en:"Hotel Prokop Square Prague",lat:50.0846,lng:14.4502,desc:"프라하 숙소에서 마지막 아침."},
+          {t:"10:30",type:"move",nomap:true,name:"프라하 중앙역까지 걷기",en:"Praha hlavní nádraží",lat:50.0833,lng:14.4353,desc:"숙소에서 걸어서 약 20분. 짐이 무거우면 우버로 5–10분.",tip:"출발 30분 전에는 역에 도착해 전광판에서 승강장을 확인하세요."},
+          {t:"11:37",type:"move",nomap:true,name:"EC 279 출발 (368호차 2등석, 15·16번 좌석)",en:"Praha hlavní nádraží",lat:50.0833,lng:14.4353,desc:"약 6시간 51분. PDF 승차권은 휴대폰에 저장하고, 검표 때 여권과 함께 보여 줘요.",tip:"식당칸이 없을 수도 있으니 역에서 샌드위치와 물을 사서 타세요."},
+          {t:"18:28",type:"move",name:"부다페스트 서역 도착",en:"Budapest-Nyugati pályaudvar",lat:47.5104,lng:19.0566,desc:"구스타브 에펠 회사가 설계한 19세기 철골 역사예요."},
+          {t:"19:00",type:"move",name:"풀만 부다페스트 도착",en:"Pullman Budapest",lat:47.5050,lng:19.0580,desc:"역에서 걸어서 약 12분."},
+          {t:"20:00",type:"food",name:"푀르츠 앤 프레즐리 또는 대성당 크리스마스 마켓",en:"Pörc & Prézli Étterem, Lázár u. 1 Budapest",lat:47.5023,lng:19.0555,desc:"성 이슈트반 대성당 근처의 헝가리 가정식 레스토랑. 큼직한 소고기가 든 굴라시와 바삭한 튀김 요리, 저녁엔 전통 악기 라이브 연주도 있어요. 바로 옆 대성당 마켓에서 군것질로 대신해도 좋아요.",tip:"대성당 정면 3D 조명 쇼도 꼭 보세요."},
+          {t:"22:00",type:"move",name:"귀가",en:"Pullman Budapest",lat:47.5050,lng:19.0580,desc:"숙소까지 걸어서 약 7분."}
+        ],
+        budget:[["기차 간식·음료",400,"CZK"],["저녁 (푀르츠 앤 프레즐리)",18000,"HUF"],["대성당 마켓 간식",5000,"HUF"],["프라하 숙소 → 역 우버",200,"CZK",true]]
+      },
+      { date:"11/30", dow:"월", title:"국회의사당, 부다 언덕, 대성당 마켓",
+        stay:{name:"풀만 부다페스트",en:"Pullman Budapest",lat:47.5050,lng:19.0580},
+        move:"<b>하루 종일 걸어서</b> 이동해요. 마르기트 다리로 강을 건너 부다 쪽을 돌고, 세체니 다리로 돌아와요",
+        stops:[
+          {t:"09:00",type:"food",name:"조식 먹고 출발",en:"Pullman Budapest",lat:47.5050,lng:19.0580,desc:"호텔 조식."},
+          {t:"09:45",type:"sight",name:"국회의사당",en:"Hungarian Parliament Building",lat:47.5071,lng:19.0457,desc:"숙소에서 걸어서 15분. 코슈트 광장에서 도나우 강변의 웅장한 네오고딕 건물을 정면으로 봐요.",tip:"내부를 보고 싶으면 가이드 투어를 공식 사이트에서 미리 예약하세요(선택)."},
+          {t:"10:20",type:"sight",name:"도나우 강변의 신발들",en:"Shoes on the Danube Bank",lat:47.5043,lng:19.0449,desc:"국회의사당 남쪽 강변의 2차 세계대전 희생자 추모 조형물."},
+          {t:"10:45",type:"move",name:"마르기트 다리로 강 건너기",en:"Margaret Bridge, Budapest",lat:47.5145,lng:19.0475,desc:"국회의사당 북쪽 다리. 다리 위에서 뒤돌아보는 국회의사당 풍경이 좋아요. 걸어서 약 25분."},
+          {t:"11:15",type:"night",name:"바치아니 광장",en:"Batthyány tér, Budapest",lat:47.5068,lng:19.0390,desc:"강 건너 국회의사당을 정면으로 담는 대표 포토 스팟. 낮과 밤 분위기가 완전히 달라요."},
+          {t:"12:00",type:"sight",name:"어부의 요새와 마차시 성당",en:"Fisherman's Bastion",lat:47.5022,lng:19.0348,desc:"광장에서 계단길로 20분쯤 올라가요. 동화 같은 일곱 개의 고깔 탑과 모자이크 지붕 성당.",tip:"요새 아래 테라스는 무료, 위층 테라스는 유료예요."},
+          {t:"13:00",type:"cafe",name:"루스부름 (군것질 점심)",en:"Ruszwurm Cukrászda",lat:47.5022,lng:19.0333,desc:"1827년 문을 연 부다에서 가장 오래된 제과점. 크림 케이크 크렘슈니트와 커피로 쉬어 가요. 성 지구 골목의 랑고시 노점도 좋아요."},
+          {t:"14:00",type:"sight",name:"부다 왕궁",en:"Buda Castle",lat:47.4962,lng:19.0396,desc:"성 지구를 따라 남쪽으로 걸어 왕궁 테라스로. 도나우 강과 세체니 다리, 페스트 쪽 전경이 한눈에 보여요."},
+          {t:"15:30",type:"night",name:"세체니 다리 노을",en:"Széchenyi Chain Bridge",lat:47.4990,lng:19.0436,desc:"왕궁에서 계단이나 푸니쿨라로 내려와 다리를 건너요. 15시 55분쯤 해가 지니 다리 위에서 노을을 봐요."},
+          {t:"16:30",type:"xmas",name:"성 이슈트반 대성당 크리스마스 마켓",en:"Advent Bazilika Budapest",lat:47.5009,lng:19.0538,desc:"다리에서 걸어서 15분. 대성당 정면 3D 조명 쇼와 별빛 캐노피 아래서 굴뚝빵, 랑고시, 뜨거운 와인으로 저녁을 대신해요."},
+          {t:"19:00",type:"move",name:"귀가",en:"Pullman Budapest",lat:47.5050,lng:19.0580,desc:"대성당에서 숙소까지 걸어서 약 7분."}
+        ],
+        budget:[["어부의 요새 윗층 테라스 2장",3000,"HUF"],["군것질 점심 (랑고시 등)",8000,"HUF"],["루스부름 케이크·커피",5000,"HUF"],["마켓 저녁 간식·뜨거운 와인",12000,"HUF"],["커피·물",3000,"HUF"],["국회의사당 내부 투어 2장",26000,"HUF",true],["부다 왕궁 푸니쿨라 하행 2인",4000,"HUF",true]]
+      },
+      { date:"12/1", dow:"화", title:"시민공원 스케이트, 국회의사당 야경",
+        stay:{name:"풀만 부다페스트",en:"Pullman Budapest",lat:47.5050,lng:19.0580},
+        move:"<b>스케이트장까지 걸어서 약 30분</b>(또는 지하철 M1). 저녁엔 <b>코슈트 광장까지 걸어서 15분, M2 지하철로 바치아니 광장까지 한 정거장</b>",
+        stops:[
+          {t:"09:00",type:"food",name:"조식 먹고 출발",en:"Pullman Budapest",lat:47.5050,lng:19.0580,desc:"안드라시 거리를 따라 영웅 광장 쪽으로 걸어가요."},
+          {t:"10:00",type:"sight",name:"시민공원 아이스링크 (영웅 광장 옆)",en:"City Park Ice Rink, Városligeti Műjégpálya",lat:47.5155,lng:19.0800,desc:"버이더후녀드 성 앞 호수가 겨울엔 커다란 야외 아이스링크로 변해요. 1인 7,000 Ft (입장 3,500 + 스케이트 대여 3,500).",tip:"운영 09:00–13:00, 17:00–21:00. 보증금 총 4,000 Ft는 현금으로 준비하세요. 두꺼운 양말, 장갑, 방풍 재킷 필수.",warn:"걷기 싫으면 숙소 근처 오페라역에서 M1을 타고 회쇠크 테레(Hősök tere)역까지 약 5분. 지하철은 개찰구에서 카드 태그(Pay&GO)로 바로 탈 수 있어요."},
+          {t:"13:00",type:"food",name:"버골요바르 (점심 추천)",en:"Bagolyvár Étterem, Budapest",lat:47.5180,lng:19.0785,desc:"시민공원 동물원 옆의 아늑한 헝가리 가정식 레스토랑. 스케이트 후 따뜻한 수프와 스튜로 몸을 녹여요.",tip:"영업 시간을 미리 확인하세요."},
+          {t:"14:00",type:"move",name:"숙소에서 휴식",en:"Pullman Budapest",lat:47.5050,lng:19.0580,desc:"M1 회쇠크 테레역 → 오페라역(Pay&GO), 내려서 걸어서 5분."},
+          {t:"16:00",type:"move",name:"국회의사당으로 출발",en:"Kossuth Lajos tér, Budapest",lat:47.5072,lng:19.0470,desc:"숙소에서 걸어서 약 15분. 16시 반쯤이면 국회의사당 조명이 켜져요.",tip:"대중교통이 필요하면 지하철만 쓰는 게 가장 쉬워요. 개찰구에서 각자 카드를 태그하면 1회권(500 Ft)이 바로 결제돼요."},
+          {t:"16:30",type:"night",name:"국회의사당 야경 (코슈트 광장)",en:"Hungarian Parliament Building",lat:47.5071,lng:19.0457,desc:"가까이서 올려다보는 황금빛 국회의사당."},
+          {t:"17:15",type:"night",name:"바치아니 광장에서 강 건너 야경",en:"Batthyány tér, Budapest",lat:47.5068,lng:19.0390,desc:"코슈트 러요시 광장역(Kossuth Lajos tér)에서 M2 지하철로 한 정거장, 바치아니 광장역(Batthyány tér) 하차. 강 건너 정면으로 빛나는 국회의사당이 부다페스트 최고의 야경이에요."},
+          {t:"18:30",type:"food",name:"헝가리쿰 비스트로 (저녁 추천)",en:"Hungarikum Bisztró, Budapest",lat:47.5060,lng:19.0490,desc:"M2로 코슈트 광장역에 돌아와 걸어서 5분. 구야시와 헝가리 가정식.",tip:"자리가 적어 예약을 권해요."},
+          {t:"20:00",type:"move",name:"하루 끝",en:"Pullman Budapest",lat:47.5050,lng:19.0580,desc:"숙소까지 걸어서 약 15분."}
+        ],
+        budget:[["스케이트 2인 (입장+대여)",14000,"HUF"],["점심 (버골요바르)",16000,"HUF"],["지하철 1회권 (Pay&GO) 6회",3000,"HUF"],["저녁 (헝가리쿰)",22000,"HUF"],["간식·음료",4000,"HUF"]]
+      },
+      { date:"12/2", dow:"수", title:"세체니 온천, 마지막 야경",
+        stay:{name:"풀만 부다페스트",en:"Pullman Budapest",lat:47.5050,lng:19.0580},
+        move:"<b>오페라역 → M1 → 세체니 퓌르될뢰역</b> 약 10분 (Pay&GO). 저녁엔 <b>2번 트램</b>으로 강변을 따라 국회의사당까지",
+        stops:[
+          {t:"07:00",type:"food",name:"기상, 조식",en:"Pullman Budapest",lat:47.5050,lng:19.0580,desc:"온천 준비물을 챙겨요: 슬리퍼, 수건, 휴대폰 방수팩, 젖은 옷 담을 가방, 여분 속옷과 양말, 세면용품."},
+          {t:"08:00",type:"move",name:"세체니 온천으로 출발",en:"Opera metro station, Budapest",lat:47.5027,lng:19.0590,desc:"오페라역에서 M1을 타고 세체니 퓌르될뢰(Széchenyi fürdő)역 하차. 개찰구에서 각자 카드 태그."},
+          {t:"08:30",type:"sight",name:"세체니 온천",en:"Széchenyi Thermal Bath",lat:47.5186,lng:19.0817,desc:"노란 네오바로크 건물 속 노천 온천. 차가운 아침 공기에 김이 오르는 탕이 겨울 여행의 하이라이트예요.",tip:"굿모닝 부다페스트 티켓은 현장 구매만 돼요. 9시 전에 구매와 입장까지 마쳐야 해요. 라커 포함 1인 10,500 Ft (일반 13,200 Ft)."},
+          {t:"12:00",type:"food",name:"푀르츠 앤 프레즐리",en:"Pörc & Prézli Étterem, Lázár u. 1 Budapest",lat:47.5023,lng:19.0555,desc:"M1으로 돌아와 점심. 굴라시와 헝가리식 돈가스로 든든하게.",tip:"12시 오픈이라 시간이 딱 맞아요."},
+          {t:"14:00",type:"move",name:"숙소에서 샤워, 휴식",en:"Pullman Budapest",lat:47.5050,lng:19.0580,desc:"젖은 수영복은 오늘 밤 말려 두세요."},
+          {t:"17:00",type:"xmas",name:"뵈뢰슈머르티 광장 크리스마스 마켓",en:"Vörösmarty tér Christmas Market",lat:47.4963,lng:19.0505,desc:"부다페스트에서 가장 오래된 크리스마스 마켓. 굴뚝빵 퀴르퇴슈칼라치와 뜨거운 와인 포랄트 보르. 옆의 제르보 카페도 들러 보세요."},
+          {t:"18:30",type:"move",name:"2번 트램으로 강변 따라 국회의사당까지",en:"Vigadó tér tram stop, Budapest",lat:47.4960,lng:19.0480,desc:"광장에서 강변 비거도 광장 정류장까지 걸어서 3분. 2번 트램을 타고 코슈트 러요시 광장(Kossuth Lajos tér)에서 내려요. 창밖으로 부다 왕궁과 다리 야경이 이어지는 노선이에요.",tip:"트램은 아직 카드 태그가 안 돼요. BudapestGO 앱이나 정류장 발권기에서 1회권을 미리 사고, 앱 티켓은 타기 전에 활성화하세요."},
+          {t:"19:00",type:"night",name:"마지막 국회의사당 야경",en:"Hungarian Parliament Building",lat:47.5071,lng:19.0457,desc:"부다페스트에서의 마지막 밤, 황금빛 국회의사당 앞에서."},
+          {t:"19:30",type:"food",name:"키슈커쿠크 (저녁 추천)",en:"Kiskakukk Étterem, Pozsonyi út 12 Budapest",lat:47.5135,lng:19.0505,desc:"국회의사당에서 북쪽으로 걸어서 약 15분. 100년 넘은 헝가리 전통 레스토랑에서 마지막 저녁.",tip:"숙소까지는 걸어서 약 15분이에요."}
+        ],
+        budget:[["세체니 굿모닝 티켓 2장 (라커 포함)",21000,"HUF"],["지하철 왕복 2인 (Pay&GO)",2000,"HUF"],["점심 (푀르츠 앤 프레즐리)",18000,"HUF"],["마켓 간식·뜨거운 와인",8000,"HUF"],["2번 트램 2인",1000,"HUF"],["저녁 (키슈커쿠크)",20000,"HUF"]]
+      },
+      { date:"12/3", dow:"목", title:"기념품 쇼핑, 귀국",
+        stay:{name:"풀만 부다페스트 (체크아웃)",en:"Pullman Budapest",lat:47.5050,lng:19.0580},
+        move:"<b>10:00 체크아웃 후 짐 보관 → 14:30 짐 찾기 → 15:20 데아크 광장 100E 정류장</b> → 공항 터미널 2 (약 40분), 19:30 출국",
+        stops:[
+          {t:"10:00",type:"move",name:"체크아웃, 짐 맡기기",en:"Pullman Budapest",lat:47.5050,lng:19.0580,desc:"프런트에 짐을 맡기고 가볍게 쇼핑을 나가요."},
+          {t:"10:15",type:"sight",name:"부다페스트 수브니어",en:"Budapest Souvenir, Andrássy út 27",lat:47.5030,lng:19.0607,desc:"숙소 근처 안드라시 거리의 기념품 가게. 파프리카, 자수 소품 같은 대표 기념품."},
+          {t:"11:00",type:"sight",name:"메모리즈 오브 헝가리",en:"Memories of Hungary Basilica Budapest",lat:47.5010,lng:19.0525,desc:"대성당 근처의 기념품 숍. 흔한 관광 기념품보다 디자인이 깔끔한 헝가리 소품이 많아요."},
+          {t:"12:00",type:"sight",name:"로도덴드론 아트 앤 디자인 숍",en:"Rododendron Art & Design Shop, Semmelweis utca 19",lat:47.4935,lng:19.0590,desc:"데아크 광장 근처 골목의 작은 디자인 숍. 헝가리 작가 100여 명의 일러스트, 엽서, 액세서리처럼 캐리어에 넣기 좋은 기념품이 많아요."},
+          {t:"13:00",type:"food",name:"점심: 심플리 (로도덴드론 바로 옆)",en:"Szimply, Semmelweis utca Budapest",lat:47.4934,lng:19.0592,desc:"로도덴드론은 식당이 아니라 상점이라, 바로 옆 브런치 카페 심플리에서 점심을 추천해요. 옆집 콘탁트 커피도 유명해요.",tip:"브런치 위주라 오후 일찍 닫을 수 있어요. 영업 시간을 확인하세요."},
+          {t:"14:30",type:"move",name:"숙소에서 짐 찾기",en:"Pullman Budapest",lat:47.5050,lng:19.0580,desc:"심플리에서 숙소까지 걸어서 약 15분."},
+          {t:"15:20",type:"move",name:"데아크 광장 100E 정류장",en:"100E Airport Express Deák Ferenc tér",lat:47.4972,lng:19.0545,desc:"숙소에서 걸어서 약 15분. 버스 앞에 '100E Airport' 또는 'Liszt Ferenc Airport 2' 표시를 확인하고 앞문으로 타요.",tip:"차 안 Pay&GO 단말기에 각자 카드를 태그하면 구매와 검표가 한 번에 끝나요. 1인 2,500 Ft. 캐리어 둘 공간도 있어요."},
+          {t:"16:00",type:"move",nomap:true,name:"공항 터미널 2 도착",en:"Budapest Liszt Ferenc Airport Terminal 2",lat:47.4330,lng:19.2620,desc:"환승 없이 약 40분. 19:30 출발까지 여유 있게 수속하세요."}
+        ],
+        budget:[["점심 (심플리)",12000,"HUF"],["100E 공항버스 2인",5000,"HUF"],["공항 간식",6000,"HUF"],["기념품",25000,"HUF",true]]
+      }
+    ]
+  }
+};
+
+const LEGS = [
+  ["11/20 인천 → 도하 → 취리히","QR859 00:20 인천 출발 (11/19 밤 출국 수속) → 04:50 도하, 알 마하 라운지 → QR95 08:15 출발 → 13:40 취리히. 예약번호 D7BJKV. 숙소까지 트램"],
+  ["11/21 취리히 → 인터라켄","기차 약 2시간"],
+  ["11/24 인터라켄 → 루체른","09:30 → 12:00, 루체른–인터라켄 익스프레스"],
+  ["11/25 루체른 → 리기산 → 루체른","유람선으로 비츠나우, 산악열차로 리기 쿨름, 아르트골다우 경유 기차로 복귀"],
+  ["11/26 루체른 → 취리히 공항 → 프라하","07:35 IR75 → 08:44 공항역, 항공 12:35 → 13:55 프라하, 우버로 숙소"],
+  ["11/29 프라하 → 부다페스트","EC 279, 11:37 → 18:28 부다페스트 서역(뉴가티), 368호차 15·16번"],
+  ["12/3 부다페스트 → 인천","15:20 데아크 광장에서 100E 공항버스, 항공 19:30 → 12/4 14:20"]
+];
+const FACTS = [
+  ["해가 아주 짧아요","일몰이 스위스 16:45, 프라하 16:00, 부다페스트 15:55 무렵이에요. 산과 전망대는 오전과 이른 오후에 몰고, 저녁은 마켓과 야경으로 짰어요."],
+  ["11월은 산악 정비 기간","피르스트(11/27까지), 멘리헨(12/11까지), 그린델발트 빙하 협곡, 트뤼멜바흐 폭포는 쉬어요. 융프라우요흐(아이거 익스프레스 11/21 재개), 하더쿨름(11/29까지), 뮈렌·김멜발트 케이블카, 리기 산악열차는 운행해요."],
+  ["크리스마스 마켓 시즌","취리히, 루체른(루돌프 마켓 11/20부터), 부다페스트는 이미 열려 있고, 프라하 대형 마켓은 11월 28일 무렵 개장으로 안내되고 있어요."],
+  ["스위스 일요일","11월 22일(일)엔 일반 상점이 대부분 닫아요. 역 안 코프와 미그로스는 여는 곳이 많아요."],
+  ["대중교통 승차권","프라하는 트램 안 카드 단말기에서 30분권을 사요. 부다페스트는 지하철과 100E 공항버스에서 카드를 태그(Pay&GO)하면 바로 결제되고, 트램과 버스는 BudapestGO 앱이나 발권기에서 미리 사서 개찰해요."]
+];
+const PACK = [
+  ["11/19 밤 인천공항 도착","00:20 출발이라 19일 밤 9시 반쯤까지는 공항에 도착"],
+  ["여권과 여행자 보험",""],
+  ["온천 후 젖은 수영복 담을 방수 파우치","귀국 전날 사용하니 하룻밤 말려서 챙기기"],
+  ["두꺼운 외투, 장갑, 목도리, 모자","융프라우요흐는 영하 10도 안팎"],
+  ["방수되는 등산화나 접지력 좋은 신발","뮈렌–김멜발트 눈길, 리기 정상"],
+  ["수영복, 슬리퍼, 수건, 휴대폰 방수팩","세체니 온천. 여분 속옷·양말, 세면용품도"],
+  ["멀티 어댑터","스위스는 J타입이라 한국 플러그가 안 맞을 수 있어요"],
+  ["3개국 되는 eSIM",""],
+  ["선글라스, 립밤, 보습제","설원 반사광과 건조한 날씨"],
+  ["카타르항공 예약번호 D7BJKV","QR859 · QR95"],
+  ["리기 세이버 데이 패스, 루체른–취리히 공항 SBB 티켓","11/25, 11/26 (발권 완료)"],
+  ["인터라켄 패러글라이딩 예약 (선택)","11/22, 2–3일 전 예약"],
+  ["국회의사당 내부 투어 (선택)","11/30 오전, 공식 사이트에서 예약"],
+  ["스케이트 보증금용 현금","12/1, HUF 4,000"],
+  ["세체니 굿모닝 티켓은 현장 구매만","12/2 8:30 도착, 9시 전에 구매·입장 완료"],
+  ["식당 예약","초이크하우스켈러, 글라이스 드라이(11/21), 베비스, 우 글라우비추, 헝가리쿰"],
+  ["트래블카드 충전","CHF, CZK, HUF"]
+];
+
+/* ---------- state ---------- */
+const store = {
+  get(k,f){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):f; }catch(e){ return f; } },
+  set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
+};
+const state = {
+  city:"swiss", day:0, filter:"all", active:null,
+  favs:new Set(store.get("hm2-favs",[])),
+  pack:new Set(store.get("hm3-pack",[])),
+  opt:new Set(store.get("hm3-opt",[])),
+  rates:Object.assign({},DEFAULT_RATES,store.get("hm2-rates",{}))
+};
+const CITIES = ["swiss","prague","budapest"];
+const sid=(c,d,i)=>`${c}-${d}-${i}`;
+const bid=(c,d,i)=>`${c}-${d}-b${i}`;
+const esc=s=>String(s).replace(/[&<>"]/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[ch]));
+const gmap=s=>`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(s.en)}`;
+const n0=v=>Math.round(v).toLocaleString("ko-KR");
+const won=v=>{ const r=Math.round(v/1000)*1000; return r>=10000 ? `${(r/10000).toLocaleString("ko-KR",{maximumFractionDigits:1})}만 원` : `${n0(r)}원`; };
+const heart='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.3-9.2C1.4 7.9 3.6 4.5 7 4.5c2 0 3.4 1.1 5 3 1.6-1.9 3-3 5-3 3.4 0 5.6 3.4 4.3 6.8-1.8 4.6-9.3 9.2-9.3 9.2z"/></svg>';
+
+function dayTotal(c,d,includeAllOpt){
+  const t={CHF:0,CZK:0,HUF:0};
+  TRIP[c].days[d].budget.forEach((b,i)=>{
+    const [lab,amt,cur,opt]=b;
+    if(opt && !(includeAllOpt || state.opt.has(bid(c,d,i)))) return;
+    t[cur]+=amt;
+  });
+  t.krw = t.CHF*state.rates.CHF + t.CZK*state.rates.CZK + t.HUF*state.rates.HUF;
+  return t;
+}
+function curStr(t){
+  return ["CHF","CZK","HUF"].filter(k=>t[k]).map(k=>`${k} ${n0(t[k])}`).join(" + ") || "없음";
+}
+function grand(){
+  const g={CHF:0,CZK:0,HUF:0,krw:0};
+  CITIES.forEach(c=>TRIP[c].days.forEach((_,d)=>{ const t=dayTotal(c,d); g.CHF+=t.CHF; g.CZK+=t.CZK; g.HUF+=t.HUF; g.krw+=t.krw; }));
+  return g;
+}
+
+/* ---------- hero ---------- */
+const P=(lat,lng)=>[(lng-6.5)*67,(51-lat)*100];
+function drawRoute(){
+  const svg=document.getElementById("routemap");
+  let h="";
+  for(let lng=8;lng<=20;lng+=2){ const x=P(48,lng)[0]; h+=`<line class="grat" x1="${x}" y1="0" x2="${x}" y2="480"/>`; }
+  for(let lat=47;lat<=50;lat++){ const y=P(lat,10)[1]; h+=`<line class="grat" x1="0" y1="${y}" x2="940" y2="${y}"/>`; }
+  [["독일",50.3,10.6],["체코",49.45,15.6],["오스트리아",47.35,14.0],["슬로바키아",48.75,19.6],["헝가리",46.75,18.2],["스위스",46.55,9.4]]
+    .forEach(([n,la,ln])=>{ const [x,y]=P(la,ln); h+=`<text class="country" x="${x}" y="${y}" text-anchor="middle">${n}</text>`; });
+  const danube=[[48.40,9.99],[49.02,12.10],[48.57,13.46],[48.31,14.29],[48.21,16.37],[48.14,17.11],[47.76,18.13],[47.79,18.74],[47.78,19.13],[47.50,19.05],[46.90,18.93],[46.25,18.95]];
+  h+=`<polyline class="river" points="${danube.map(p=>P(...p).join(",")).join(" ")}"/>`;
+  const [dx,dy]=P(48.42,15.3); h+=`<text class="riverlabel" x="${dx}" y="${dy}">도나우 강</text>`;
+  const Z=P(47.3769,8.5417), I=P(46.6863,7.8632), K=P(47.0502,8.3093), PR=P(50.0755,14.4378), BU=P(47.4979,19.0402);
+  h+=`<path class="leg swiss draw" pathLength="1" d="M${Z} L${I} L${K} L${Z}" style="animation-delay:.2s"/>`;
+  h+=`<path class="leg flight fade" d="M${Z} Q 300,110 ${PR}" style="animation-delay:1.2s"/>`;
+  h+=`<path class="leg train draw" pathLength="1" d="M${PR} L${BU}" style="animation-delay:1.8s"/>`;
+  h+=`<text class="legtag fade" x="250" y="185" style="animation-delay:1.4s">11/26 비행 약 1시간 15분</text>`;
+  h+=`<text class="legtag fade" x="700" y="205" style="animation-delay:2.4s">11/29 기차 약 7시간</text>`;
+  const stops=[
+    {n:"취리히",p:Z,c:"swiss",d:0,dx:14,dy:-6,a:"start"},
+    {n:"인터라켄",p:I,c:"swiss",d:1,dx:0,dy:26,a:"middle"},
+    {n:"루체른",p:K,c:"swiss",d:4,dx:14,dy:8,a:"start"},
+    {n:"프라하",p:PR,c:"prague",d:0,dx:0,dy:-18,a:"middle"},
+    {n:"부다페스트",p:BU,c:"budapest",d:0,dx:15,dy:6,a:"start"}
+  ];
+  stops.forEach(s=>{
+    h+=`<g class="stop fade" tabindex="0" role="button" aria-label="${s.n} 일정 보기" data-c="${s.c}" data-d="${s.d}" style="animation-delay:.1s">
+      <circle cx="${s.p[0]}" cy="${s.p[1]}" r="7" style="stroke:var(--${s.c})"/>
+      <text x="${s.p[0]+s.dx}" y="${s.p[1]+s.dy}" text-anchor="${s.a}">${s.n}</text></g>`;
+  });
+  svg.innerHTML=h;
+  svg.querySelectorAll(".stop").forEach(g=>{
+    const go=()=>{ goCity(g.dataset.c,+g.dataset.d); jumpTabs(); };
+    g.addEventListener("click",go);
+    g.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); go(); } });
+  });
+}
+function renderHeroSum(){
+  const g=grand();
+  document.getElementById("herosum").innerHTML =
+    `<div><span>현지 지출 예상 (2인)</span> <b>${won(g.krw)}</b></div>
+     <div><span>필요 통화</span> <b>${curStr(g)}</b></div>`;
+}
+function jumpTabs(){ document.getElementById("tabs").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"}); }
+
+/* ---------- tabs ---------- */
+function renderTabs(){
+  const tabs=[["swiss","스위스"],["prague","프라하"],["budapest","부다페스트"],["money","예산과 환전"],["tips","이동과 준비물"],["fav","찜한 곳"]];
+  document.getElementById("tabs").innerHTML=tabs.map(([k,n])=>
+    `<button class="tab" role="tab" aria-selected="${state.city===k}" data-k="${k}">${n}${k==="fav"?`<span class="cnt">${state.favs.size}</span>`:""}</button>`).join("");
+  document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>goCity(b.dataset.k,0));
+}
+function goCity(c,d){ state.city=c; state.day=d||0; state.filter="all"; state.active=null; document.body.dataset.city=c; render(); }
+
+/* ---------- day map ---------- */
+function dayMap(c,d,day){
+  const items=day.stops.map((st,i)=>({st,i})).filter(o=>!o.st.nomap);
+  const stops=items.map(o=>o.st), W=440, H=300, pad=36;
+  const all=[...stops, day.stay];
+  const lats=all.map(s=>s.lat), lngs=all.map(s=>s.lng);
+  const mid=(Math.min(...lats)+Math.max(...lats))/2, k=Math.cos(mid*Math.PI/180);
+  const xs=lngs.map(v=>v*k);
+  const x0=Math.min(...xs), x1=Math.max(...xs), y0=Math.min(...lats), y1=Math.max(...lats);
+  const span=Math.max(x1-x0,y1-y0,0.004);
+  const s=Math.min((W-pad*2)/Math.max(x1-x0,span*0.3),(H-pad*2)/Math.max(y1-y0,span*0.3));
+  const cx=(x0+x1)/2, cy=(y0+y1)/2;
+  const pt=st=>[W/2+(st.lng*k-cx)*s, H/2-(st.lat-cy)*s];
+  let g="";
+  for(let i=1;i<6;i++) g+=`<line class="g" x1="${W*i/6}" y1="0" x2="${W*i/6}" y2="${H}"/>`;
+  for(let i=1;i<4;i++) g+=`<line class="g" x1="0" y1="${H*i/4}" x2="${W}" y2="${H*i/4}"/>`;
+  const pts=stops.map(pt);
+  g+=`<polyline class="path" points="${pts.map(p=>p.map(v=>v.toFixed(1)).join(",")).join(" ")}"/>`;
+  const [hx,hy]=pt(day.stay);
+  g+=`<g class="home" aria-label="숙소"><rect x="${(hx-11).toFixed(1)}" y="${(hy-11).toFixed(1)}" width="22" height="22" rx="4"/><text x="${hx.toFixed(1)}" y="${hy.toFixed(1)}">숙</text></g>`;
+  items.map((o,k)=>({st:o.st,i:o.i,k})).reverse().forEach(({st,i,k})=>{
+    const [x,y]=pts[k], id=sid(c,d,i);
+    const dim=state.filter!=="all" && st.type!==state.filter;
+    g+=`<g class="pin${state.active===id?" on":""}${dim?" dim":""}" data-id="${id}" tabindex="0" role="button" aria-label="${i+1}. ${esc(st.name)}">
+      <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="12"/><text x="${x.toFixed(1)}" y="${y.toFixed(1)}">${i+1}</text></g>`;
+  });
+  return `<svg class="daymap" viewBox="0 0 ${W} ${H}" role="img" aria-label="${day.date} 동선 지도">${g}</svg>`;
+}
+function dirLink(day){
+  const ll=s=>`${s.lat},${s.lng}`;
+  const st=day.stops.filter(x=>!x.nomap), w=st.slice(0,-1).map(ll).join("|");
+  return `https://www.google.com/maps/dir/?api=1&origin=${ll(day.stay)}&destination=${ll(st[st.length-1])}${w?`&waypoints=${encodeURIComponent(w)}`:""}`;
+}
+
+/* ---------- budget panel ---------- */
+function budgetPanel(c,d){
+  const day=TRIP[c].days[d], t=dayTotal(c,d);
+  return `<div class="card budget">
+    <h3>${day.date} 예상 지출</h3>
+    <p class="sub">2인 기준, 교통편과 숙박 제외. 선택 항목은 체크하면 합계에 들어가요.</p>
+    ${day.budget.map((b,i)=>{
+      const [lab,amt,cur,opt]=b, id=bid(c,d,i), on=state.opt.has(id);
+      return `<div class="bitem${opt?" opt":""}${opt&&on?" on":""}">
+        ${opt?`<input type="checkbox" data-opt="${id}" ${on?"checked":""} aria-label="${esc(lab)} 포함">`:`<span></span>`}
+        <span class="lab">${esc(lab)}${opt?`<span class="optl">선택</span>`:""}</span>
+        <span class="amt">${cur} ${n0(amt)}</span></div>`;
+    }).join("")}
+    <div class="btotal"><span class="loc">${curStr(t)}</span><span class="krw">약 ${won(t.krw)}</span></div>
+  </div>`;
+}
+
+/* ---------- stop card ---------- */
+function stopCard(c,d,i,st,label){
+  const id=sid(c,d,i), fav=state.favs.has(id);
+  const hidden=state.filter!=="all" && st.type!==state.filter;
+  return `<article class="stop${state.active===id?" on":""}${hidden?" hidden":""}" id="s-${id}" data-id="${id}">
+    <div class="time">${label||st.t}</div>
+    <div>
+      <div class="row"><span class="num">${label?"":i+1}</span>
+        <h3 data-pick="${id}">${esc(st.name)}${st.opt?`<span class="optl">선택</span>`:""}</h3>
+        <button class="fav" aria-pressed="${fav}" aria-label="${esc(st.name)} 찜하기" data-fav="${id}">${heart}</button></div>
+      <p class="en">${esc(st.en)}</p>
+      <span class="cat"><span class="dot ${st.type}"></span>${TYPES[st.type]}</span>
+      <p class="desc">${esc(st.desc)}</p>
+      ${st.tip?`<p class="tip">${esc(st.tip)}</p>`:""}
+      ${st.warn?`<p class="warn">${esc(st.warn)}</p>`:""}
+      <div class="links"><a href="${gmap(st)}" target="_blank" rel="noopener">구글 지도에서 열기</a></div>
+    </div></article>`;
+}
+
+/* ---------- views ---------- */
+function renderCity(){
+  const c=state.city, T=TRIP[c], day=T.days[state.day], stops=day.stops;
+  const counts=stops.reduce((m,s)=>(m[s.type]=(m[s.type]||0)+1,m),{});
+  return `
+  <div class="cityhead">
+    <h2>${T.name}<small>${T.sub}</small></h2>
+    <div class="facts">${T.facts.map(([k,v])=>`<span>${k} <b>${v}</b></span>`).join("")}</div>
+  </div>
+  <div class="days" role="group" aria-label="날짜 선택">
+    ${T.days.map((dd,i)=>`<button class="day" aria-pressed="${i===state.day}" data-day="${i}"><div class="dn">${dd.date} (${dd.dow})</div><div class="dt">${dd.title}</div><div class="dm">약 ${won(dayTotal(c,i).krw)}</div></button>`).join("")}
+  </div>
+  <div class="grid">
+    <aside class="side">
+      <div class="card">
+        ${dayMap(c,state.day,day)}
+        <div class="mapfoot">
+          <p class="stay"><span class="tag">숙</span><span><b>${esc(day.stay.name)}</b> <a href="${gmap(day.stay)}" target="_blank" rel="noopener" style="color:var(--accent)">지도</a></span></p>
+          <p>${day.move}</p>
+          <a class="btn" href="${dirLink(day)}" target="_blank" rel="noopener">오늘 동선 구글 지도로 보기</a>
+        </div>
+      </div>
+      ${budgetPanel(c,state.day)}
+    </aside>
+    <section>
+      ${day.warn?`<div class="warn">${day.warn}</div>`:""}
+      <div class="filters" role="group" aria-label="종류별 보기">
+        <button class="chip" aria-pressed="${state.filter==="all"}" data-f="all">전체 ${stops.length}</button>
+        ${Object.keys(TYPES).filter(t=>counts[t]).map(t=>`<button class="chip" aria-pressed="${state.filter===t}" data-f="${t}"><span class="dot ${t}"></span>${TYPES[t]} ${counts[t]}</button>`).join("")}
+      </div>
+      <div class="list">${stops.map((st,i)=>stopCard(c,state.day,i,st)).join("")}</div>
+    </section>
+  </div>`;
+}
+
+function renderMoney(){
+  const g=grand(), r=state.rates;
+  const allOptOn = CITIES.every(c=>TRIP[c].days.every((dd,d)=>dd.budget.every((b,i)=>!b[3]||state.opt.has(bid(c,d,i)))));
+  let rows="";
+  CITIES.forEach(c=>{
+    const T=TRIP[c]; const sub={CHF:0,CZK:0,HUF:0,krw:0};
+    T.days.forEach((dd,d)=>{
+      const t=dayTotal(c,d); ["CHF","CZK","HUF","krw"].forEach(k=>sub[k]+=t[k]);
+      rows+=`<tr class="clickable" data-goc="${c}" data-god="${d}"><td>${dd.date} (${dd.dow})</td><td>${dd.title}</td><td class="num">${curStr(t)}</td><td class="num">${won(t.krw)}</td></tr>`;
+    });
+    rows+=`<tr class="sub"><td colspan="2">${T.name} 소계</td><td class="num">${curStr(sub)}</td><td class="num">${won(sub.krw)}</td></tr>`;
+  });
+  const buf=1.15;
+  const cash={CHF:150,CZK:2000,HUF:20000};
+  return `
+  <div class="cityhead"><h2>예산과 환전<small>음식, 입장료, 현지 교통처럼 아직 결제하지 않은 비용만 모았어요. 2인 기준이에요.</small></h2></div>
+  <div class="twocol">
+    <div class="panel full">
+      <h3>적용 환율</h3>
+      <div class="rates">
+        ${["CHF","CZK","HUF"].map(k=>`<label>1 ${k} (${CUR[k]}) =<span class="inp"><input type="number" inputmode="decimal" step="any" min="0" value="${r[k]}" data-rate="${k}" aria-label="1 ${k} 원화 환율"><span>원</span></span></label>`).join("")}
+      </div>
+      <p class="notice" style="margin-top:10px">10월 중순 시세를 바탕으로 넣은 대략적인 값이에요. 환전하실 때 실제 환율로 고치면 모든 금액이 다시 계산돼요.</p>
+      <div class="bigtotal"><span class="k">약 ${won(g.krw)}</span><span class="s">전체 현지 지출 예상 (선택 항목은 체크한 것만 포함)</span></div>
+      <label class="toggle"><input type="checkbox" id="allopt" ${allOptOn?"checked":""}> 선택 항목(융프라우요흐, 쉴트호른, 크루즈 등) 모두 포함하기</label>
+      <div class="cur3">
+        ${["CHF","CZK","HUF"].map(k=>`<div><div class="c">${CUR[k]}</div><div class="v">${k} ${n0(g[k])}</div><div class="w">약 ${won(g[k]*r[k])} · 여유분 15% 포함 ${k} ${n0(Math.ceil(g[k]*buf/10)*10)}</div></div>`).join("")}
+      </div>
+    </div>
+    <div class="panel full">
+      <h3>날짜별 예상 지출</h3>
+      <div class="tablewrap"><table>
+        <thead><tr><th>날짜</th><th>일정</th><th class="num">현지 통화</th><th class="num">원화</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table></div>
+      <p class="notice" style="margin-top:10px">행을 누르면 그날 일정으로 이동해요. 기념품과 쇼핑은 빠져 있으니 따로 잡아 두세요.</p>
+    </div>
+    <div class="panel">
+      <h3>환전은 이렇게</h3>
+      <ul class="advice">
+        <li><b>대부분은 트래블카드로</b><span>세 나라 모두 카드 결제가 잘 돼요. 외화 충전식 트래블카드에 통화별로 충전해 두고 결제하는 게 가장 편해요.</span></li>
+        <li><b>현금은 조금만</b><span>스위스 CHF ${cash.CHF}, 체코 CZK ${n0(cash.CZK)}, 헝가리 HUF ${n0(cash.HUF)} 정도면 선착장 입장료, 펍, 마켓, 팁에 충분해요.</span></li>
+        <li><b>코루나와 포린트는 현지 인출</b><span>국내 환전보다 트래블카드로 현지 은행 ATM에서 뽑는 쪽이 보통 유리해요. 관광지의 유로넷 ATM은 수수료가 커서 피하세요.</span></li>
+        <li><b>결제할 땐 현지 통화 선택</b><span>카드 단말기나 ATM이 원화 결제를 권하면 거절하고 현지 통화로 결제하세요.</span></li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3>금액 기준</h3>
+      <ul class="advice">
+        <li><b>스위스 식사</b><span>점심 1인 CHF 20–30, 저녁 1인 CHF 45–60(음료 포함). 모든 숙소가 조식 포함이라 아침값은 넣지 않았어요.</span></li>
+        <li><b>체코·헝가리 식사</b><span>펍 저녁 2인 CZK 900–1,600, 특별 디너 CZK 3,000 안팎. 부다페스트 저녁 2인 HUF 22,000–26,000.</span></li>
+        <li><b>스위스 패스 할인</b><span>융프라우요흐는 그린델발트 위 구간 25% 할인, 하더쿨름은 패스 할인가로 계산했어요. 리기산은 세이버 데이 패스로 추가 비용이 없어요.</span></li>
+        <li><b>세체니 온천</b><span>9시 전 굿모닝 티켓 HUF 10,500 (라커 포함, 1인)으로 계산했어요.</span></li>
+      </ul>
+    </div>
+  </div>
+  <p class="notice">입장료와 메뉴 가격은 2026년 공개 자료를 바탕으로 한 추정치예요. 실제 금액은 조금씩 다를 수 있어요.</p>`;
+}
+
+function renderTips(){
+  return `
+  <div class="cityhead"><h2>이동과 준비물<small>결제하신 이동편 순서, 11월에 알아 둘 것, 챙길 것</small></h2></div>
+  <div class="twocol">
+    <div class="panel"><h3>이동 순서</h3><ol class="timeline">${LEGS.map(([a,b])=>`<li><b>${a}</b><span>${b}</span></li>`).join("")}</ol></div>
+    <div class="panel"><h3>11월에 알아 둘 것</h3><ul class="advice">${FACTS.map(([a,b])=>`<li><b>${a}</b><span>${b}</span></li>`).join("")}</ul></div>
+    <div class="panel full"><h3>준비물과 예약 체크리스트 <span style="font-family:'IBM Plex Sans KR',sans-serif;font-size:14px;font-weight:400;color:var(--muted)">${state.pack.size}/${PACK.length}</span></h3>
+      ${PACK.map(([a,b],i)=>`<label class="check${state.pack.has(i)?" done":""}"><input type="checkbox" data-pack="${i}" ${state.pack.has(i)?"checked":""}><span>${a}${b?`<small>${b}</small>`:""}</span></label>`).join("")}
+    </div>
+  </div>
+  <p class="notice">영업시간, 운행 일정, 요금은 바뀔 수 있어요. 출발 전 각 장소의 공식 사이트에서 한 번 더 확인하세요.</p>`;
+}
+
+function renderFavs(){
+  const groups=CITIES.map(c=>{
+    const T=TRIP[c], items=[];
+    T.days.forEach((dd,d)=>dd.stops.forEach((st,i)=>{ if(state.favs.has(sid(c,d,i))) items.push(stopCard(c,d,i,st,dd.date)); }));
+    return items.length?`<div class="favgroup"><h3>${T.name}</h3><div class="list">${items.join("")}</div></div>`:"";
+  }).join("");
+  return `<div class="cityhead"><h2>찜한 곳<small>왼쪽 날짜는 방문 예정일이에요</small></h2></div>
+    ${groups||`<div class="empty">아직 찜한 곳이 없어요. 도시 일정에서 장소 옆 하트를 눌러 담아 보세요.</div>`}`;
+}
+
+function render(){
+  renderTabs(); renderHeroSum();
+  const m=document.getElementById("main");
+  if(state.city==="money") m.innerHTML=renderMoney();
+  else if(state.city==="tips") m.innerHTML=renderTips();
+  else if(state.city==="fav") m.innerHTML=renderFavs();
+  else m.innerHTML=renderCity();
+  bind();
+}
+
+function setActive(id,scroll){
+  state.active=state.active===id?null:id;
+  document.querySelectorAll(".pin").forEach(p=>p.classList.toggle("on",p.dataset.id===state.active));
+  document.querySelectorAll(".stop").forEach(s=>s.classList.toggle("on",s.dataset.id===state.active));
+  if(scroll&&state.active){ const el=document.getElementById("s-"+id); if(el) el.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"center"}); }
+}
+
+function bind(){
+  document.querySelectorAll("[data-day]").forEach(b=>b.onclick=()=>{ state.day=+b.dataset.day; state.filter="all"; state.active=null; render(); });
+  document.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>{ state.filter=b.dataset.f; render(); });
+  document.querySelectorAll(".pin").forEach(p=>{
+    p.onclick=()=>setActive(p.dataset.id,true);
+    p.onkeydown=e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); setActive(p.dataset.id,true); } };
+  });
+  document.querySelectorAll("[data-pick]").forEach(h=>h.onclick=()=>setActive(h.dataset.pick,false));
+  document.querySelectorAll("[data-fav]").forEach(b=>b.onclick=()=>{
+    const id=b.dataset.fav; state.favs.has(id)?state.favs.delete(id):state.favs.add(id);
+    store.set("hm2-favs",[...state.favs]);
+    if(state.city==="fav") render(); else { b.setAttribute("aria-pressed",state.favs.has(id)); renderTabs(); }
+  });
+  document.querySelectorAll("[data-opt]").forEach(cb=>cb.onchange=()=>{
+    const id=cb.dataset.opt; cb.checked?state.opt.add(id):state.opt.delete(id);
+    store.set("hm3-opt",[...state.opt]); render();
+  });
+  document.querySelectorAll("[data-pack]").forEach(cb=>cb.onchange=()=>{
+    const i=+cb.dataset.pack; cb.checked?state.pack.add(i):state.pack.delete(i);
+    store.set("hm3-pack",[...state.pack]); render();
+  });
+  document.querySelectorAll("[data-rate]").forEach(inp=>inp.onchange=()=>{
+    const v=parseFloat(inp.value); if(!(v>0)) { inp.value=state.rates[inp.dataset.rate]; return; }
+    state.rates[inp.dataset.rate]=v; store.set("hm2-rates",state.rates); render();
+  });
+  const all=document.getElementById("allopt");
+  if(all) all.onchange=()=>{
+    CITIES.forEach(c=>TRIP[c].days.forEach((dd,d)=>dd.budget.forEach((b,i)=>{ if(b[3]){ all.checked?state.opt.add(bid(c,d,i)):state.opt.delete(bid(c,d,i)); } })));
+    store.set("hm3-opt",[...state.opt]); render();
+  };
+  document.querySelectorAll("[data-goc]").forEach(tr=>tr.onclick=()=>{ goCity(tr.dataset.goc,+tr.dataset.god); jumpTabs(); });
+}
+
+document.querySelectorAll(".legs button").forEach(b=>b.onclick=()=>{ goCity(b.dataset.go,0); jumpTabs(); });
+drawRoute();
+render();
+</script>
+</body>
+</html>
